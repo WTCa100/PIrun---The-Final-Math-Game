@@ -18,10 +18,10 @@ Menu::Menu()
 struct stat info;
 
 // Creates directory
-void Menu::makeDir(int fType)
+void Menu::makeDir(int fileType)
 {
 	std::string _exBatFile = MAKE_FILES;
-	switch (fType)
+	switch (fileType)
 	{
 	case 1: // Highscores
 		_exBatFile += "MAKE_HIGHSCORES.bat";

@@ -14,8 +14,10 @@
 class Menu
 {
 private:
+
+	// Checking Directories
 	bool InitialBootUp;
-	void makeDir(int fType);
+	void makeDir(int fileType);
 	void checkEssentialDirectories();
 	void checkDir(std::string _FILENAME);
 	bool lookForDir(std::string _DIRpath);
