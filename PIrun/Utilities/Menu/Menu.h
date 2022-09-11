@@ -14,7 +14,11 @@
 class Menu
 {
 private:
-
+	// Checking Files
+	void checkEssentialFiles();
+	void makeInitialFiles();
+	void makeFile(std::string _DIRpath, std::string strFileName);
+	bool lookForFile(std::string _DIRpath, std::string strFileName = "");
 	// Checking Directories
 	bool InitialBootUp;
 	void makeDir(int fileType);

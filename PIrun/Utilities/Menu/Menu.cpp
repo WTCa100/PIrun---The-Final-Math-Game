@@ -3,7 +3,7 @@
 
 void Menu::mainDisplay()
 {
-	std::cout << "Welcome to PIrun - the final math game!\n";
+	std::cout << "\nWelcome to PIrun - the final math game!\n";
 	std::cout << "Options:\n";
 }
 
@@ -11,7 +11,57 @@ Menu::Menu()
 {
 	InitialBootUp = false;
 	checkEssentialDirectories();
+	if (InitialBootUp)
+		makeInitialFiles();
+	else
+	{
+		checkEssentialFiles();
+	}
+	
 }
+/*The following methods are uset do validate wether or not essential files exists*/
+void Menu::checkEssentialFiles()
+{
+	bool bIsInitialFileGood;
+	do 
+	{
+		if (!lookForFile(HIGHSCORES, "Highscores.txt"))
+		{
+			bIsInitialFileGood = false;
+			makeFile(HIGHSCORES, "Highscores.txt");
+		}
+		else bIsInitialFileGood = true;
+	}while (!bIsInitialFileGood);
+}
+
+void Menu::makeInitialFiles()
+{
+	makeFile(HIGHSCORES, "Highscores.txt");
+}
+
+void Menu::makeFile(std::string _DIRpath, std::string strFileName)
+{
+	std::string _path = _DIRpath + strFileName;
+	std::ofstream filePlace;
+	std::cout << "Creating " << strFileName << " at " << _DIRpath << std::endl;
+	filePlace.open(_path);
+	filePlace.close();
+}
+
+bool Menu::lookForFile(std::string _DIRpath, std::string strFileName)
+{
+	std::string _path = _DIRpath + strFileName;
+	std::ifstream fileCheck;
+	fileCheck.open(_path);
+	if (!fileCheck.is_open())
+	{
+		std::cout << strFileName << " has not been found at: " << _path << std::endl;
+		return false;
+	}
+	else fileCheck.close();
+	return true;
+}
+
 
 /*The following methods are used to validate wether or not essential directories exists*/
 

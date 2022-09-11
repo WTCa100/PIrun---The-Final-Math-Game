@@ -4,4 +4,6 @@
 int main()
 {
 	Menu* gameMenu = new Menu;
+	gameMenu->mainDisplay();
+	delete gameMenu;
 }
