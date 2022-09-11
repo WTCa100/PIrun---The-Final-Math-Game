@@ -24,6 +24,9 @@
     <ClCompile Include="Utilities\Menu\InputValidator\InputCheck.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities\Menu\Menu.h">
@@ -32,5 +35,22 @@
     <ClInclude Include="Utilities\Menu\InputValidator\InputCheck.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Menu\Pathing\Paths.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Utilities\Fmake\MAKE_DETAILED_RECORDS.bat">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Utilities\Fmake\MAKE_HIGHSCORES.bat">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="Utilities\Fmake\MAKE_PROBLEM_SET.bat">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

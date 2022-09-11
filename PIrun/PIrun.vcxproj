@@ -132,10 +132,18 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Utilities\Menu\InputValidator\InputCheck.cpp" />
     <ClCompile Include="Utilities\Menu\Menu.cpp" />
+    <ClCompile Include="Utilities\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities\Menu\InputValidator\InputCheck.h" />
     <ClInclude Include="Utilities\Menu\Menu.h" />
+    <ClInclude Include="Utilities\Menu\Pathing\Paths.h" />
+    <ClInclude Include="Utilities\Player.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Utilities\Fmake\MAKE_DETAILED_RECORDS.bat" />
+    <None Include="Utilities\Fmake\MAKE_HIGHSCORES.bat" />
+    <None Include="Utilities\Fmake\MAKE_PROBLEM_SET.bat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
