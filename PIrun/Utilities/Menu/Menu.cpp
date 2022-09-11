@@ -3,8 +3,12 @@
 
 void Menu::mainDisplay()
 {
-	std::cout << "\nWelcome to PIrun - the final math game!\n";
-	std::cout << "Options:\n";
+	std::cout << "Welcome to PIrun - the final math game!\t\tGame created by John Bielawa - (WTCa100/Pepga315)\n";
+	std::cout << "Main Menu:\n";
+	std::cout << "1. New game\n";
+	std::cout << "2. Highscores\n";
+	std::cout << "3. About this game\n";
+	std::cout << "4. Exit\n";
 }
 
 Menu::Menu()
@@ -17,7 +21,8 @@ Menu::Menu()
 	{
 		checkEssentialFiles();
 	}
-	
+	system("Pause");
+	system("cls");
 }
 /*The following methods are uset do validate wether or not essential files exists*/
 void Menu::checkEssentialFiles()
@@ -51,6 +56,7 @@ void Menu::makeFile(std::string _DIRpath, std::string strFileName)
 bool Menu::lookForFile(std::string _DIRpath, std::string strFileName)
 {
 	std::string _path = _DIRpath + strFileName;
+	std::cout << "Looking for " << _path << "\n";
 	std::ifstream fileCheck;
 	fileCheck.open(_path);
 	if (!fileCheck.is_open())
@@ -59,6 +65,7 @@ bool Menu::lookForFile(std::string _DIRpath, std::string strFileName)
 		return false;
 	}
 	else fileCheck.close();
+	std::cout << _path << " found!\n";
 	return true;
 }
 
@@ -121,9 +128,10 @@ void Menu::checkDir(std::string _FILENAME)
 // Function checks if specific Dir exists using stat info
 bool Menu::lookForDir(std::string _DIRpath)
 {
+	std::cout << "Looking for: " << _DIRpath << std::endl;
 	if (stat(_DIRpath.c_str(), &info) != 0) // If dir was found succesfully return 0 if not returns -1
 	{
-		std::cout << "Cannot access " << _DIRpath << "\n";
+		std::cout << "Cannot access " << _DIRpath << std::endl;
 		return false;
 	}
 	std::cout << _DIRpath << " found!\n";

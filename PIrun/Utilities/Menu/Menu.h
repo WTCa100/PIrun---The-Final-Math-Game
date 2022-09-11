@@ -26,6 +26,7 @@ private:
 	void checkDir(std::string _FILENAME);
 	bool lookForDir(std::string _DIRpath);
 public:
+	// Display functions
 	void mainDisplay();
 	Menu();
 };
