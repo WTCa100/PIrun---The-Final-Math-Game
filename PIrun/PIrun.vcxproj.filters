@@ -21,9 +21,15 @@
     <ClCompile Include="Utilities\Menu\Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Utilities\Menu\InputValidator\InputCheck.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities\Menu\Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\Menu\InputValidator\InputCheck.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

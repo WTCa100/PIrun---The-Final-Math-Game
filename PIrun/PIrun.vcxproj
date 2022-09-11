@@ -130,9 +130,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Utilities\Menu\InputValidator\InputCheck.cpp" />
     <ClCompile Include="Utilities\Menu\Menu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Utilities\Menu\InputValidator\InputCheck.h" />
     <ClInclude Include="Utilities\Menu\Menu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
