@@ -40,6 +40,7 @@ void Menu::makeDir(int fType)
 	system(_exBatFile.c_str());
 }
 
+// Sends different queries to check
 void Menu::checkEssentialDirectories()
 {
 	checkDir(HIGHSCORES);
