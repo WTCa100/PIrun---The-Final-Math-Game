@@ -5,6 +5,8 @@
 #include<sys/stat.h>
 #include<string>
 
+#include"InputValidator/InputCheck.h"
+
 #define HIGHSCORES "Gamestate/"
 #define DETAILED_RECORDS "Gamestate/Details"
 #define PROBLEM_SET "Gamestate/Details/Problems"
@@ -15,6 +17,7 @@ class Menu
 {
 private:
 	// Checking Files
+	void getUserInput(int& actType);
 	void checkEssentialFiles();
 	void makeInitialFiles();
 	void makeFile(std::string _DIRpath, std::string strFileName);

@@ -3,12 +3,18 @@
 
 void Menu::mainDisplay()
 {
-	std::cout << "Welcome to PIrun - the final math game!\t\tGame created by John Bielawa - (WTCa100/Pepga315)\n";
-	std::cout << "Main Menu:\n";
-	std::cout << "1. New game\n";
-	std::cout << "2. Highscores\n";
-	std::cout << "3. About this game\n";
-	std::cout << "4. Exit\n";
+	int nNextActionType;
+	do
+	{
+		std::cout << "Welcome to PIrun - the final math game!\t\tGame created by John Bielawa - (WTCa100/Pepga315)\n";
+		std::cout << "Main Menu:\n";
+		std::cout << "1. New game\n";
+		std::cout << "2. Highscores\n";
+		std::cout << "3. About this game\n";
+		std::cout << "4. Exit\n";
+		std::cout << "Type an option and press enter\n";
+		getUserInput(nNextActionType);
+	} while (nNextActionType != 1);
 }
 
 Menu::Menu()
@@ -23,6 +29,35 @@ Menu::Menu()
 	}
 	system("Pause");
 	system("cls");
+}
+// Get user input error handling
+void Menu::getUserInput(int &actType)
+{
+	bool bIsUserInputCorrect = false;
+	std::string strTmpUserInput;
+	do
+	{
+		std::getline(std::cin, strTmpUserInput);
+		if (!Validate::isInputNumber(strTmpUserInput))
+		{
+			std::cout << "Please enter a numeric value!\n";
+		}
+		else
+		{
+			actType = std::stoi(strTmpUserInput);
+			if (!Validate::isWithtinRange(actType, 4, 1))
+			{
+				std::cout << Validate::isWithtinRange(actType,1,4) << std::endl;
+				std::cout << "Please enter value within range!\n";
+			}
+			else
+			{
+				bIsUserInputCorrect = true;
+			}
+		}
+			
+	} while (!bIsUserInputCorrect);
+
 }
 /*The following methods are uset do validate wether or not essential files exists*/
 void Menu::checkEssentialFiles()
