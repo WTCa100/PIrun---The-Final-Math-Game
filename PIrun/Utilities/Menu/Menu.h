@@ -28,6 +28,9 @@ private:
 	void checkEssentialDirectories();
 	void checkDir(std::string _FILENAME);
 	bool lookForDir(std::string _DIRpath);
+	// Display Functions
+	void showAboutMeSection();
+	void showHighScores();
 public:
 	// Display functions
 	void mainDisplay();

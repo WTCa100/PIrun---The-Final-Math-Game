@@ -14,6 +14,22 @@ void Menu::mainDisplay()
 		std::cout << "4. Exit\n";
 		std::cout << "Type an option and press enter\n";
 		getUserInput(nNextActionType);
+		switch (nNextActionType)
+			{
+			default:
+				std::cout << "No such action action found\n";
+				break;
+			case 1:
+				break;
+			case 2:
+				showHighScores();
+				break;
+			case 3:
+				showAboutMeSection();
+			break;
+			case 4:
+				exit(0);
+			}
 	} while (nNextActionType != 1);
 }
 
@@ -171,4 +187,16 @@ bool Menu::lookForDir(std::string _DIRpath)
 	}
 	std::cout << _DIRpath << " found!\n";
 	return true;
+}
+
+/*Display functions and methods*/
+
+void Menu::showAboutMeSection()
+{
+	std::cout << "About the game\n";
+}
+
+void Menu::showHighScores()
+{
+	std::cout << "Highscores section\n";
 }
