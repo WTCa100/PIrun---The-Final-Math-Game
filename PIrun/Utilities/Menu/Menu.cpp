@@ -78,21 +78,29 @@ void Menu::getUserInput(int &actType)
 /*The following methods are uset do validate wether or not essential files exists*/
 void Menu::checkEssentialFiles()
 {
-	bool bIsInitialFileGood;
-	do 
-	{
-		if (!lookForFile(HIGHSCORES, "Highscores.txt"))
-		{
-			bIsInitialFileGood = false;
-			makeFile(HIGHSCORES, "Highscores.txt");
-		}
-		else bIsInitialFileGood = true;
-	}while (!bIsInitialFileGood);
+	checkScores(HIGHSCORES_TXT);
+	checkScores(SCOREBOARD_CSV);
 }
 
 void Menu::makeInitialFiles()
 {
-	makeFile(HIGHSCORES, "Highscores.txt");
+	makeFile(SCORES, HIGHSCORES_TXT);
+}
+
+void Menu::checkScores(std::string strFileName, std::string _DIRpath)
+{
+	bool bIsFileGood;
+	do
+	{
+		if (!lookForFile(SCORES, strFileName))
+		{
+			bIsFileGood = false;
+			makeFile(SCORES, strFileName);
+		}
+		else
+			bIsFileGood = true;
+		 
+	} while (!bIsFileGood);
 }
 
 void Menu::makeFile(std::string _DIRpath, std::string strFileName)
@@ -101,6 +109,8 @@ void Menu::makeFile(std::string _DIRpath, std::string strFileName)
 	std::ofstream filePlace;
 	std::cout << "Creating " << strFileName << " at " << _DIRpath << std::endl;
 	filePlace.open(_path);
+	if (strFileName == SCOREBOARD_CSV)
+		filePlace << "ID," << "Name," << "Points\n";
 	filePlace.close();
 }
 
@@ -151,7 +161,7 @@ void Menu::makeDir(int fileType)
 // Sends different queries to check
 void Menu::checkEssentialDirectories()
 {
-	checkDir(HIGHSCORES);
+	checkDir(SCORES);
 	checkDir(DETAILED_RECORDS);
 	checkDir(PROBLEM_SET);
 }
@@ -166,7 +176,7 @@ void Menu::checkDir(std::string _FILENAME)
 			bDoesDirExists = true;
 		else
 		{
-			if (_FILENAME == HIGHSCORES)
+			if (_FILENAME == SCORES)
 				makeDir(1);
 			else if (_FILENAME == DETAILED_RECORDS)
 				makeDir(2);
