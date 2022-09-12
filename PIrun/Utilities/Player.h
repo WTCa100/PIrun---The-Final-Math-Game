@@ -3,8 +3,9 @@
 #include<fstream>
 
 #include "Menu/Menu.h"
+#include "Menu/Pathing/Paths.h"
 
-class Player : private Menu
+class Player : protected Menu
 {
 private:
 	int nID;
