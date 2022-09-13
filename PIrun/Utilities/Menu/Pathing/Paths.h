@@ -1,7 +1,7 @@
 #pragma once
-#define SCORES "Gamestate/"
-#define DETAILED_RECORDS "Gamestate/Details"
-#define PROBLEM_SET "Gamestate/Details/Problems"
+#define SCORES "GameFiles/"
+#define DETAILED_RECORDS "GameFiles/Details"
+#define PROBLEM_SET "GameFiles/Details/Problems"
 
 #define MAKE_FILES "Utilities\\Fmake\\"
 
