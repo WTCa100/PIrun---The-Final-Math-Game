@@ -1,3 +1,3 @@
-cd Gamestate
+cd GameFiles
 cd Details
 mkdir Problems

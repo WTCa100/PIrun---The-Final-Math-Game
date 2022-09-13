@@ -1,2 +1,2 @@
-cd Gamestate
+cd GameFiles
 mkdir Details
