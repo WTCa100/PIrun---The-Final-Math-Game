@@ -6,12 +6,15 @@
 #include<string>
 #include<sstream>
 
+#include"GameState/Gamestate.h"
 #include"InputValidator/InputCheck.h"
 #include"Pathing/Paths.h"
 
 class Menu
 {
 private:
+	// Value obtaining
+	void setInitialDiff(); // Constructor method that sets initial difficult value to 1
 	// Checking Files
 	void getUserInput(int& actType);
 	void checkEssentialFiles();
@@ -19,17 +22,15 @@ private:
 	void checkScores(std::string strFileName, std::string _DIRpath = SCORES);
 	void makeFile(std::string _DIRpath, std::string strFileName);
 	bool lookForFile(std::string _DIRpath, std::string strFileName = "");
-	// Checking Directories
-	void makeDir(int fileType);
-	void checkEssentialDirectories();
-	void checkDir(std::string _FILENAME);
-	bool lookForDir(std::string _DIRpath);
 	// Display Functions
 	void showAboutMeSection();
 	void showHighScores();
 protected:
 	bool InitialBootUp;
+	int nGameDiff;
 public:
+	// Value obtaining
+	int GetGameDiff();
 	// Display functions
 	void mainDisplay();
 	Menu();

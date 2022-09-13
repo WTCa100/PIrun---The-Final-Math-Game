@@ -1,6 +1,23 @@
 #pragma once
 #include"Menu.h"
 
+int Menu::GetGameDiff()
+{
+	std::string strTmpHolder;
+	std::cout << "Choose your difficulty: \n";
+	std::cout << "Option 1\n";
+	std::cout << "Option 2\n";
+	std::cout << "Option 3\n";
+	std::cout << "Option 4\n";
+	std::cout << "Option 5\n";
+	std::cout << "Option 6\n";
+	do
+	{
+		std::getline(std::cin, strTmpHolder);
+	} while (true);
+	return 0;
+}
+
 void Menu::mainDisplay()
 {
 	int nNextActionType;
@@ -32,19 +49,26 @@ void Menu::mainDisplay()
 			}
 	} while (nNextActionType != 1);
 }
-
+// Main and default constructor
 Menu::Menu()
 {
-	InitialBootUp = false;
-	checkEssentialDirectories();
+	GameState::Setup();
+	InitialBootUp = GameState::InitialBootUp;
+	std::cout << "GameState::InitialBootUp = " << GameState::InitialBootUp << "\n";
 	if (InitialBootUp)
 		makeInitialFiles();
 	else
 	{
 		checkEssentialFiles();
 	}
+	setInitialDiff();
+	
 	system("Pause");
 	system("cls");
+}
+void Menu::setInitialDiff()
+{
+	this->nGameDiff = 1;
 }
 // Get user input error handling
 void Menu::getUserInput(int &actType)
@@ -132,72 +156,6 @@ bool Menu::lookForFile(std::string _DIRpath, std::string strFileName)
 
 
 /*The following methods are used to validate wether or not essential directories exists*/
-
-struct stat info;
-
-// Creates directory
-void Menu::makeDir(int fileType)
-{
-	std::string _exBatFile = MAKE_FILES;
-	switch (fileType)
-	{
-	case 1: // Highscores
-		_exBatFile += "MAKE_HIGHSCORES.bat";
-		InitialBootUp = true;
-		break;
-	case 2: // Detail records
-		_exBatFile += "MAKE_DETAILED_RECORDS.bat";
-		break;
-	case 3: // Problem sets
-		_exBatFile += "MAKE_PROBLEM_SET.bat";
-		break;
-	}
-	std::cout << "Creating file...\n";
-	std::cout << "Executing " << _exBatFile << std::endl;
-	_exBatFile += " >nul"; // This is used to not display logs from cmdlet
-	system(_exBatFile.c_str());
-}
-
-// Sends different queries to check
-void Menu::checkEssentialDirectories()
-{
-	checkDir(SCORES);
-	checkDir(DETAILED_RECORDS);
-	checkDir(PROBLEM_SET);
-}
-
-// Functions checks and makes files found missing
-void Menu::checkDir(std::string _FILENAME)
-{
-	bool bDoesDirExists = false;
-	do
-	{
-		if (lookForDir(_FILENAME))
-			bDoesDirExists = true;
-		else
-		{
-			if (_FILENAME == SCORES)
-				makeDir(1);
-			else if (_FILENAME == DETAILED_RECORDS)
-				makeDir(2);
-			else if (_FILENAME == PROBLEM_SET)
-				makeDir(3);
-			else { std::cout << "Unknown error orccured.\n"; system("exit"); }
-		}
-	} while (!bDoesDirExists);
-}
-// Function checks if specific Dir exists using stat info
-bool Menu::lookForDir(std::string _DIRpath)
-{
-	std::cout << "Looking for: " << _DIRpath << std::endl;
-	if (stat(_DIRpath.c_str(), &info) != 0) // If dir was found succesfully return 0 if not returns -1
-	{
-		std::cout << "Cannot access " << _DIRpath << std::endl;
-		return false;
-	}
-	std::cout << _DIRpath << " found!\n";
-	return true;
-}
 
 /*Display functions and methods*/
 
