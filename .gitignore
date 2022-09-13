@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /PIrun/SavingTemplate.txt
+/PIrun/GameFiles/Highscores.txt
+/PIrun/GameFiles/Scoreboard.csv

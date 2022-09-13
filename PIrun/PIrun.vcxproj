@@ -130,15 +130,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Utilities\Menu\GameState\Gamestate.cpp" />
     <ClCompile Include="Utilities\Menu\InputValidator\InputCheck.cpp" />
     <ClCompile Include="Utilities\Menu\Menu.cpp" />
     <ClCompile Include="Utilities\Player.cpp" />
+    <ClCompile Include="Utilities\ProblemGen.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Utilities\Menu\GameState\Gamestate.h" />
     <ClInclude Include="Utilities\Menu\InputValidator\InputCheck.h" />
     <ClInclude Include="Utilities\Menu\Menu.h" />
     <ClInclude Include="Utilities\Menu\Pathing\Paths.h" />
     <ClInclude Include="Utilities\Player.h" />
+    <ClInclude Include="Utilities\ProblemGen.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Utilities\Fmake\MAKE_DETAILED_RECORDS.bat" />
