@@ -1,6 +1,11 @@
 #include "InputCheck.h"
 #pragma once
 
+bool Validate::isEntryEmpty(std::string strSample)
+{
+	return strSample.empty();
+}
+
 bool Validate::isWithtinRange(int nSample, int nMaxVal, int nMinVal)
 {
 	if (nSample > nMaxVal || nSample < nMinVal)
@@ -10,7 +15,7 @@ bool Validate::isWithtinRange(int nSample, int nMaxVal, int nMinVal)
 
 bool Validate::isInputNumber(std::string strSample)
 {
-	if (strSample.empty())
+	if (Validate::isEntryEmpty(strSample))
 		return false;
 	bool bIsNegative = false;
 	if (strSample[0] == '-')
