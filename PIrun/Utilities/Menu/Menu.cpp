@@ -109,6 +109,7 @@ void Menu::checkEssentialFiles()
 void Menu::makeInitialFiles()
 {
 	makeFile(SCORES, HIGHSCORES_TXT);
+	makeFile(SCORES, SCOREBOARD_CSV);
 }
 
 void Menu::checkScores(std::string strFileName, std::string _DIRpath)
