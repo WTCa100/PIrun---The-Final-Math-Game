@@ -4,11 +4,12 @@
 
 int Player::getLatestId()
 {
-	if (GameState::InitialBootUp)
+	if (isInitialLaunch)
 		nID = 1;
 	else
 	{
-		std::cout << "Es\n";
+		std::cout << "Implement loading latest ID here\n";
+		nID = 2137;
 		
 	}
 	return 0;
@@ -26,7 +27,10 @@ void Player::getInitialUserName()
 	} while (Validate::isEntryEmpty(this->strUsername));
 }
 
-Player::Player()
+Player::Player(bool isInitial)
 {
+	this->isInitialLaunch = isInitial;
+	getLatestId();
 	getInitialUserName();
+	std::cout << "Hello " << this->strUsername << "!\n Your id is: " << this->nID << "\n";
 }
