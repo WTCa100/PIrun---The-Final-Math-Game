@@ -37,6 +37,7 @@ void Menu::mainDisplay()
 				std::cout << "No such action action found\n";
 				break;
 			case 1:
+				newGame();
 				break;
 			case 2:
 				showHighScores();
@@ -47,7 +48,7 @@ void Menu::mainDisplay()
 			case 4:
 				exit(0);
 			}
-	} while (nNextActionType != 1);
+	} while (true);
 }
 // Main and default constructor
 Menu::Menu()
@@ -159,6 +160,13 @@ bool Menu::lookForFile(std::string _DIRpath, std::string strFileName)
 /*The following methods are used to validate wether or not essential directories exists*/
 
 /*Display functions and methods*/
+
+void Menu::newGame()
+{
+	GameState* GState = new GameState;
+
+	delete GState; // Remove this later
+}
 
 void Menu::showAboutMeSection()
 {

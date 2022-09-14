@@ -7,6 +7,7 @@
 #include<sstream>
 
 #include"GameState/Gamestate.h"
+#include"GameState/MaxValues.h"
 #include"InputValidator/InputCheck.h"
 #include"Pathing/Paths.h"
 
@@ -23,6 +24,7 @@ private:
 	void makeFile(std::string _DIRpath, std::string strFileName);
 	bool lookForFile(std::string _DIRpath, std::string strFileName = "");
 	// Display Functions
+	void newGame();
 	void showAboutMeSection();
 	void showHighScores();
 protected:
