@@ -68,9 +68,90 @@ bool GameState::lookForDir(std::string _DIRpath)
 	return true;
 }
 
-// Setup the game
+// Set up the game 
+
+void GameState::initializeGame()
+{
+	Player* MathPlayer = new Player(this->InitialBootUp);
+	GetDifficultyLevel();
+	GetGameAmmount();
+	for (int i = 1; i <= this->GameAmmount; i++)
+	{
+		Problem* Prob = new Problem(this->GameDifficulty);
+		delete Prob;
+	}
+	delete MathPlayer;
+}
+
+// Set up game information
+// Difficulty
+void GameState::GetDifficultyLevel() 
+{
+	std::string tmpValHolder;
+	bool bIsInputGood;
+	do
+	{
+		std::cout << "Give me difficult level: (from 1 to 6)\n";
+		std::getline(std::cin, tmpValHolder);
+		if (!Validate::isInputNumber(tmpValHolder))
+		{
+			std::cout << "The value needs to be numeric!\n";
+			bIsInputGood = false;
+		}
+		else
+		{
+			if(!Validate::isWithtinRange(std::stoi(tmpValHolder), MAX_DIFF))
+			{ 
+				std::cout << "Value must be in within 1 to " << MAX_DIFF <<" range!\n";
+				bIsInputGood = false;
+			}
+			else
+			{
+				bIsInputGood = true;
+			}
+		}
+	} while (!bIsInputGood);
+	this->GameDifficulty = std::stoi(tmpValHolder);
+	tmpValHolder.clear();
+}
+// Game ammount (How many games does player wants to play?)
+void GameState::GetGameAmmount()
+{
+	std::string tmpValHolder;
+	bool bIsInputGood;
+	do
+	{
+		std::cout << "Give me game ammount (from 1 to 50)\n";
+		std::getline(std::cin, tmpValHolder);
+		if (!Validate::isInputNumber(tmpValHolder))
+		{
+			std::cout << "The value needs to be numeric!\n";
+			bIsInputGood = false;
+		}
+		else
+		{
+			if (!Validate::isWithtinRange(std::stoi(tmpValHolder), MAX_GAME_COUNT))
+			{
+				std::cout << "Value must be in within 1 to " << MAX_GAME_COUNT << " range!\n";
+				bIsInputGood = false;
+			}
+			else
+			{
+				bIsInputGood = true;
+			}
+		}
+	} while (!bIsInputGood);
+	this->GameAmmount = std::stoi(tmpValHolder);
+	tmpValHolder.clear();
+}
 
 void GameState::Setup()
 {
 	checkEssentialDirectories();
+}
+
+GameState::GameState()
+{
+	GameDifficulty = 1; // Initial Value
+	initializeGame();
 }
