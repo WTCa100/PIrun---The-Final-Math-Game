@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities\Menu\GameState\Gamestate.h" />
+    <ClInclude Include="Utilities\Menu\GameState\MaxValues.h" />
     <ClInclude Include="Utilities\Menu\InputValidator\InputCheck.h" />
     <ClInclude Include="Utilities\Menu\Menu.h" />
     <ClInclude Include="Utilities\Menu\Pathing\Paths.h" />

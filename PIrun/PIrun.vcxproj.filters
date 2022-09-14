@@ -53,6 +53,9 @@
     <ClInclude Include="Utilities\ProblemGen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities\Menu\GameState\MaxValues.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Utilities\Fmake\MAKE_DETAILED_RECORDS.bat">
