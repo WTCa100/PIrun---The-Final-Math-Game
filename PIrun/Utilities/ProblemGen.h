@@ -16,6 +16,8 @@ private:
 	double dbExpected, dbActual;
 	double GenerateNum(int Dif);
 	char GenerateAction();
+	double GenerateSolution();
+	void generateSelf();
 public:
 	Problem(int Difficulty);
 };
