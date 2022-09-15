@@ -23,6 +23,7 @@ private:
 	double GetUserInput();
 	bool wasAnswerGood(char cActionDone);
 	void generateSelf();
+	void problemSummary();
 public:
 	Problem(int Difficulty, int _ID);
 };

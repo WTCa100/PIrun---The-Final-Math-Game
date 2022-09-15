@@ -94,6 +94,18 @@ void Problem::generateSelf()
 
 }
 
+void Problem::problemSummary()
+{
+	std::cout << "Expecter problem answer was: " << dbExpected << std::endl;
+	std::cout << "You answered: " << dbActual;
+	if(bIsAnsGood)
+	{
+		std::cout << ". Which was correct!\n"; // Later add info about points
+		return;
+	}
+	std::cout << ". Which was not correct!\n";  
+}
+
 Problem::Problem(int Difficulty, int _ID)
 {
 	this->nDiff = Difficulty;
@@ -106,5 +118,5 @@ Problem::Problem(int Difficulty, int _ID)
 		std::cout << std::setprecision(6) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << dbExpected << std::endl;
 	dbActual = GetUserInput();
 	bIsAnsGood = wasAnswerGood(this->cAct);
-	std::cout << std::boolalpha << bIsAnsGood << std::endl;
+	problemSummary();
 }
