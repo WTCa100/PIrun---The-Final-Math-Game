@@ -11,6 +11,8 @@ const std::string ActionList = "+-*/";
 class Problem
 {
 private:
+	bool bIsAnsGood;
+	int nProblemId;
 	int nDiff;
 	char cAct;
 	double dbComp1, dbComp2;
@@ -22,5 +24,5 @@ private:
 	bool wasAnswerGood(char cActionDone);
 	void generateSelf();
 public:
-	Problem(int Difficulty);
+	Problem(int Difficulty, int _ID);
 };

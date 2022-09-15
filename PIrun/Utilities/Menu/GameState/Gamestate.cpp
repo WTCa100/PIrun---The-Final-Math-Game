@@ -77,7 +77,7 @@ void GameState::initializeGame()
 	GetGameAmmount();
 	for (int i = 1; i <= this->GameAmmount; i++)
 	{
-		Problem* Prob = new Problem(this->GameDifficulty);
+		Problem* Prob = new Problem(this->GameDifficulty, i);
 		delete Prob;
 	}
 	delete MathPlayer;

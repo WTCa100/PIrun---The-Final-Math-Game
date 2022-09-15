@@ -69,15 +69,20 @@ double Problem::GetUserInput()
 	} while (!Validate::isInputNumber(strTmpValueHolder));
 	return std::stod(strTmpValueHolder);
 }
-
+// There really is no better way (to my knowladge) on checking if a floating point (especially high precision double) is equal to another
+// The expression presented here comes from Bruce Dawnson and his lovely blog https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
 bool Problem::wasAnswerGood(char cActionDone)
 {
+	std::string tmpExpect = std::to_string(this->dbExpected);
+	std::string tmpActual = std::to_string(this->dbActual);
 	switch (cActionDone)
 	{
-	default: // TODO fill up
-		break;
+	default:
+		return fabs(dbExpected - dbActual) < DBL_EPSILON;
+	case '/':
+		return tmpExpect.find(tmpActual) != std::string::npos;
 	}
-	return false;
+	return false; // If none are presented return false val;
 }
 
 void Problem::generateSelf()
@@ -89,11 +94,17 @@ void Problem::generateSelf()
 
 }
 
-Problem::Problem(int Difficulty)
+Problem::Problem(int Difficulty, int _ID)
 {
 	this->nDiff = Difficulty;
+	this->nProblemId = _ID;
 	generateSelf();
-	std::cout << "Your problem is \n";
-	std::cout << std::setprecision(2) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << dbExpected << std::endl;
-	GetUserInput();
+	std::cout << _ID << ": Your problem is \n";
+	if (this->cAct != '/')
+		std::cout << std::setprecision(2) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << dbExpected << std::endl;
+	else
+		std::cout << std::setprecision(6) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << dbExpected << std::endl;
+	dbActual = GetUserInput();
+	bIsAnsGood = wasAnswerGood(this->cAct);
+	std::cout << std::boolalpha << bIsAnsGood << std::endl;
 }
