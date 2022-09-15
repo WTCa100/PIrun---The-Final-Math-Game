@@ -5,6 +5,7 @@
 #include<string>
 #include<cmath>
 
+#include"Menu/InputValidator/InputCheck.h"
 const std::string ActionList = "+-*/";
 
 class Problem
@@ -17,6 +18,8 @@ private:
 	double GenerateNum(int Dif);
 	char GenerateAction();
 	double GenerateSolution();
+	double GetUserInput();
+	bool wasAnswerGood(char cActionDone);
 	void generateSelf();
 public:
 	Problem(int Difficulty);

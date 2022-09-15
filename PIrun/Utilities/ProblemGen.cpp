@@ -55,6 +55,31 @@ double Problem::GenerateSolution()
 	}
 }
 
+double Problem::GetUserInput()
+{
+	std::string strTmpValueHolder;
+	do
+	{
+		std::cout << "Answer: ";
+		std::getline(std::cin, strTmpValueHolder);
+		if (!Validate::isInputNumber(strTmpValueHolder))
+		{
+			std::cout << "Plase enter a numeric value!\n";
+		}
+	} while (!Validate::isInputNumber(strTmpValueHolder));
+	return std::stod(strTmpValueHolder);
+}
+
+bool Problem::wasAnswerGood(char cActionDone)
+{
+	switch (cActionDone)
+	{
+	default: // TODO fill up
+		break;
+	}
+	return false;
+}
+
 void Problem::generateSelf()
 {
 	dbComp1 = GenerateNum(this->nDiff);
@@ -70,4 +95,5 @@ Problem::Problem(int Difficulty)
 	generateSelf();
 	std::cout << "Your problem is \n";
 	std::cout << std::setprecision(2) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << dbExpected << std::endl;
+	GetUserInput();
 }
