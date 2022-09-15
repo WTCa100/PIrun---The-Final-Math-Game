@@ -18,6 +18,18 @@ bool Validate::isInputNumber(std::string strSample)
 	if (Validate::isEntryEmpty(strSample))
 		return false;
 	bool bIsNegative = false;
+	bool bHasComma = false; // Comma and dot are treadet indifferently
+	size_t commaPos = strSample.find(','); // Try to locate comma separation
+	if (commaPos == std::string::npos)
+	{
+		commaPos = strSample.find('.');
+		if (commaPos != std::string::npos)
+			bHasComma = true;
+	}
+	else
+	{
+		bHasComma = true;
+	}
 	if (strSample[0] == '-')
 		bIsNegative = true;
 	for (int i = 0; i < strSample.size(); i++)
@@ -26,6 +38,8 @@ bool Validate::isInputNumber(std::string strSample)
 			continue;
 		if (bIsNegative && (strSample[i] == '-' && i != 0)) // Check if there is additional '-' char in string
 			return false;
+		if (bHasComma && i == commaPos)
+			continue;
 		if (!isdigit(strSample[i]))
 			return false;
 	}
