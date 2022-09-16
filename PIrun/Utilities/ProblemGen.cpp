@@ -26,6 +26,7 @@ double Problem::GenerateNum(int Dif)
 		return rand() % static_cast<long>(pow(10, Dif)) + 1;
 		break;
 	}
+	return 0.0f;
 }
 // Generate only action char
 char Problem::GenerateAction()
@@ -53,6 +54,7 @@ double Problem::GenerateSolution()
 		return this->dbComp1 / this->dbComp2;
 		break;
 	}
+	return 0.0f;
 }
 
 double Problem::GetUserInput()
@@ -110,6 +112,30 @@ void Problem::problemSummary()
 		return;
 	}
 	std::cout << ". Which was not correct!\n";  
+}
+
+
+
+void Problem::SaveProblem(std::ofstream& filePtr)
+{
+	filePtr << nProblemId << std::endl;
+	filePtr << dbPointWeight << std::endl;
+	filePtr << dbComp1 << std::endl;
+	filePtr << cAct << std::endl;
+	filePtr << dbComp2 << std::endl;
+	filePtr << dbExpected << std::endl;
+	filePtr << dbActual << std::endl;
+	filePtr << bIsAnsGood << std::endl;
+}
+
+void Problem::showProblemDone()
+{
+	std::cout << "This problem had " << dbPointWeight << " points:\n";
+	if (this->cAct != '/')
+		std::cout << std::setprecision(2) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << dbExpected << std::endl;
+	else
+		std::cout << std::setprecision(6) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << dbExpected << std::endl;
+	problemSummary();
 }
 
 Problem::Problem(int Difficulty, int _ID)

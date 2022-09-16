@@ -4,6 +4,7 @@
 #include<ctime>
 #include<string>
 #include<cmath>
+#include<fstream>
 
 #include"Menu/InputValidator/InputCheck.h"
 const std::string ActionList = "+-*/";
@@ -12,7 +13,6 @@ class Problem
 {
 private:
 	bool bIsAnsGood;
-	int nProblemId;
 	int nDiff;
 	char cAct;
 	double dbPointWeight;
@@ -26,6 +26,10 @@ private:
 	bool wasAnswerGood(char cActionDone);
 	void generateSelf();
 	void problemSummary();
+protected:
 public:
+	void SaveProblem(std::ofstream &filePtr);
+	void showProblemDone();
+	int nProblemId;
 	Problem(int Difficulty, int _ID);
 };
