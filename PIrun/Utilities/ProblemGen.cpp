@@ -85,11 +85,17 @@ bool Problem::wasAnswerGood(char cActionDone)
 	return false; // If none are presented return false val;
 }
 
+double Problem::GeneratePointWeight(char Act, int Dif)
+{
+	return (pow(Dif * 0.8, 2) + pow(Act * 0.2, 2)); // Might change the formula later
+}
+
 void Problem::generateSelf()
 {
 	dbComp1 = GenerateNum(this->nDiff);
 	dbComp2 = GenerateNum(this->nDiff);
 	cAct = GenerateAction();
+	dbPointWeight = GeneratePointWeight(this->cAct, this->nDiff);
 	dbExpected = GenerateSolution();
 
 }
@@ -111,7 +117,7 @@ Problem::Problem(int Difficulty, int _ID)
 	this->nDiff = Difficulty;
 	this->nProblemId = _ID;
 	generateSelf();
-	std::cout << _ID << ": Your problem is \n";
+	std::cout << _ID << ": This problem has "<< dbPointWeight <<" points:\n";
 	if (this->cAct != '/')
 		std::cout << std::setprecision(2) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << dbExpected << std::endl;
 	else

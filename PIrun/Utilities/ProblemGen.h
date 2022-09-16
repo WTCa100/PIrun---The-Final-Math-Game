@@ -15,8 +15,10 @@ private:
 	int nProblemId;
 	int nDiff;
 	char cAct;
+	double dbPointWeight;
 	double dbComp1, dbComp2;
 	double dbExpected, dbActual;
+	double GeneratePointWeight(char Act, int Dif);
 	double GenerateNum(int Dif);
 	char GenerateAction();
 	double GenerateSolution();
