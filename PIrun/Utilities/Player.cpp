@@ -27,6 +27,11 @@ void Player::getInitialUserName()
 	} while (Validate::isEntryEmpty(this->strUsername));
 }
 
+void Player::AddPoint(int dbPointValue)
+{
+	this->dbPointsEarned + dbPointValue;
+}
+
 Player::Player(bool isInitial)
 {
 	this->isInitialLaunch = isInitial;
