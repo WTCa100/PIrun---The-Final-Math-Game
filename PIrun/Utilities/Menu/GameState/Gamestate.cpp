@@ -78,11 +78,33 @@ void GameState::initializeGame()
 	for (int i = 1; i <= this->GameAmmount; i++)
 	{
 		Problem* Prob = new Problem(this->GameDifficulty, i);
+		MathPlayer->AssignProblem(*Prob);
 		delete Prob;
 	}
+	system("cls");
+	std::cout << "DEBUG: DISPLAY\n";
+	system("Pause");
+	MathPlayer->DisplayProblems();
+	std::cout << "END DEBUG: DISPLAY\n";
+	system("Pause");
+	system("cls");
+	std::cout << "DEBUG: Saving\n";
+	std::cout << "saving game files\n";
+	saveProblem(*MathPlayer);
+	std::cout << "Saved!\n";
+	system("Pause");
 	delete MathPlayer;
 }
 
+void GameState::saveProblem(Player whoPlayed)
+{
+	std::ofstream SaveTxt;
+	std::string _saveDIR = PROBLEM_SET;
+	_saveDIR += '/' + std::to_string(whoPlayed.givePlayerId()) + ".txt";
+	SaveTxt.open(_saveDIR);
+	whoPlayed.SavePlayerProgress(SaveTxt);
+	SaveTxt.close();
+}
 // Set up game information
 // Difficulty
 void GameState::GetDifficultyLevel() 
