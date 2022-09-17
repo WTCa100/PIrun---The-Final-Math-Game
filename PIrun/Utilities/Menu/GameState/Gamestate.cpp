@@ -80,6 +80,13 @@ void GameState::SearchForPlayerPset(int PlayerID)
 	loadDetails.close();
 }
 
+void GameState::LookAndDisplayPlayerDetails(std::map<int, Player> mappedPlayers, int Id)
+{
+	auto getPlayerInfo = mappedPlayers.find(Id);
+	if (getPlayerInfo == mappedPlayers.end()) { std::cout << "No such player found!\n"; return; }
+	mappedPlayers[Id].ShowPlayerDetails();
+}
+
 std::map<int,Player> GameState::LoadDetails()
 {
 	std::map<int, Player> mapOut;
@@ -89,7 +96,7 @@ std::map<int,Player> GameState::LoadDetails()
 	std::string strLine;
 	char cDelimeter = ',';
 	detailFile.open(_DIR + '/' + _fileName);
-	if (!detailFile.is_open()) { std::cout << "Cannot load file.\n"; return; }
+	if (!detailFile.is_open()) { std::cout << "Cannot load file.\n";}
 	while (std::getline(detailFile, strLine))
 	{
 		if (strLine == "ID,Name,Number_of_Problems,Problems_Solved_Good,Points") continue;
@@ -113,8 +120,8 @@ std::map<int,Player> GameState::LoadDetails()
 			}
 			if (nCell == 5)
 			{
-				Player* tmpP = new Player(*tmpId, *tmpUserName, *tmpPoints);
-				mapOut.insert(std::make_pair(tmpP->givePlayerId(), tmpP));
+				Player* tmpP = new Player(*tmpId, *tmpUserName, *tmpProblemAmmount, *tmpProblemGoodAmmount, *tmpPoints);
+				mapOut.insert(std::make_pair(tmpP->givePlayerId(), *tmpP));
 				delete tmpP;
 				delete tmpId; delete tmpUserName; delete tmpPoints; delete tmpProblemGoodAmmount; delete tmpProblemAmmount;
 				nCell = 1;

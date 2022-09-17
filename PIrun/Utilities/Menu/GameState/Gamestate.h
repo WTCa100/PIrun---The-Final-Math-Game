@@ -22,6 +22,7 @@ private:
 	void gameSummary(Player whoPlayed);
 public:
 	static void SearchForPlayerPset(int PlayerID);
+	static void LookAndDisplayPlayerDetails(std::map<int, Player> mappedPlayers, int Id);
 	static std::map<int,Player> LoadDetails();
 	static void LoadScoreboards();
 	int GameDifficulty, GameAmmount;
