@@ -29,12 +29,22 @@ void Player::getInitialUserName()
 
 
 
+double Player::GiveFinalScores()
+{
+	return this->dbPointsEarned;
+}
+
 void Player::SavePlayerProgress(std::ofstream &filePtr)
 {
 	for (auto i = ProblemSet.begin(); i != ProblemSet.end(); i++)
 	{
 		i->second.SaveProblem(filePtr);
 	}
+}
+
+void Player::SavePlayerToScoreboard(std::fstream& filePtr)
+{
+	filePtr << this->nID << "," << this->strUsername << "," << this->dbPointsEarned << std::endl;
 }
 
 int Player::givePlayerId()

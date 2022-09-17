@@ -20,8 +20,9 @@ private:
 	int getLatestId(); // Obtain the ID value to give to the latest player
 	void getInitialUserName(); // Constructor - get player nickname info
 public:
+	double GiveFinalScores(); // Only use this method at the end of gameplay
 	void SavePlayerProgress(std::ofstream &filePtr);
-	void SavePlayerToScoreboard(std::ofstream& filePtr); // Todo save player to scoreboard.csv
+	void SavePlayerToScoreboard(std::fstream& filePtr); // Todo save player to scoreboard.csv
 	int givePlayerId();
 	void DisplayProblems(); // Debug
 	void AssignProblem(Problem currentProblem);
