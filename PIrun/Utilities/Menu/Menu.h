@@ -26,6 +26,7 @@ private:
 	// Display Functions
 	void newGame();
 	void showAboutMeSection();
+	void showScoreboard();
 	void showHighScores();
 protected:
 	bool InitialBootUp;

@@ -26,7 +26,7 @@ void Menu::mainDisplay()
 		std::cout << "Welcome to PIrun - the final math game!\t\tGame created by John Bielawa - (WTCa100/Pepga315)\n";
 		std::cout << "Main Menu:\n";
 		std::cout << "1. New game\n";
-		std::cout << "2. Highscores\n";
+		std::cout << "2. Scoreboard\n";
 		std::cout << "3. About this game\n";
 		std::cout << "4. Exit\n";
 		std::cout << "Type an option and press enter\n";
@@ -40,7 +40,7 @@ void Menu::mainDisplay()
 				newGame();
 				break;
 			case 2:
-				showHighScores();
+				showScoreboard();
 				break;
 			case 3:
 				showAboutMeSection();
@@ -171,6 +171,12 @@ void Menu::newGame()
 void Menu::showAboutMeSection()
 {
 	std::cout << "About the game\n";
+}
+
+void Menu::showScoreboard()
+{
+	std::cout << "Format: ID : User name got (point ammount) points.\n";
+	GameState::LoadScoreboards();
 }
 
 void Menu::showHighScores()
