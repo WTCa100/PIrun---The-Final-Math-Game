@@ -105,7 +105,7 @@ void Problem::generateSelf()
 void Problem::problemSummary()
 {
 	std::cout << "Expecter problem answer was: " << dbExpected << std::endl;
-	std::cout << "You answered: " << dbActual;
+	std::cout << "Player answered: " << dbActual;
 	if(bIsAnsGood)
 	{
 		std::cout << ". Which was correct!\n"; // Later add info about points
