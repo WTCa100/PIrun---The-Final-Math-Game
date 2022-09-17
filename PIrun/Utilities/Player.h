@@ -3,7 +3,10 @@
 #include<fstream>
 #include <iostream>
 #include <map>
+#include <vector>
 #include <fstream>
+#include<sstream>
+#include<algorithm>
 
 #include "Menu/InputValidator/InputCheck.h"
 #include "Menu/Pathing/Paths.h"
@@ -18,6 +21,7 @@ private:
 	int nID;
 	std::string strUsername;
 	int getLatestId(); // Obtain the ID value to give to the latest player
+	int getHighestId();
 	void getInitialUserName(); // Constructor - get player nickname info
 public:
 	double GiveFinalScores(); // Only use this method at the end of gameplay
@@ -28,4 +32,5 @@ public:
 	void AssignProblem(Problem currentProblem);
 	void AddPoint(int dbPointValue);
 	Player(bool isInitial);
+	Player(int id, std::string un, double points); // Scoreboard.csv loading constructor
 };

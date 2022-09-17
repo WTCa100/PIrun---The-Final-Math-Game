@@ -1,18 +1,43 @@
 #pragma once
 #include"Player.h"
 
-
 int Player::getLatestId()
 {
 	if (isInitialLaunch)
 		nID = 1;
 	else
 	{
-		std::cout << "Implement loading latest ID here\n";
-		nID = 2137;
-		
+		nID = getHighestId() + 1;
 	}
+	std::cout << nID << std::endl;
 	return 0;
+}
+
+int Player::getHighestId()
+{
+	std::vector<int> vecsIdList;
+	std::string _DIR = SCORES;
+	std::string _fileName = SCOREBOARD_CSV;
+	std::ifstream loadIDs;
+	std::string strLine;
+	char cDelimeter = ',';
+	loadIDs.open(_DIR + '/' + _fileName);
+	while (std::getline(loadIDs, strLine))
+	{
+		if (strLine == "ID,Name,Points") continue;
+		std::stringstream RawLine(strLine);
+		std::string RawData;
+		bool isFirstCell = true;
+		while (std::getline(RawLine, RawData, cDelimeter))
+		{
+			if (isFirstCell) vecsIdList.push_back(std::stoi(RawData));
+			else break;
+			isFirstCell = false;
+		}
+	}
+	loadIDs.close();
+	if (vecsIdList.empty()) return 0;
+	return *std::max_element(vecsIdList.begin(), vecsIdList.end());
 }
 
 void Player::getInitialUserName()
@@ -79,4 +104,11 @@ Player::Player(bool isInitial)
 	getLatestId();
 	getInitialUserName();
 	std::cout << "Hello " << this->strUsername << "!\n Your id is: " << this->nID << "\n";
+}
+
+Player::Player(int id, std::string un, double points)
+{
+	this->nID = id;
+	this->strUsername = un;
+	this->dbPointsEarned = points;
 }
