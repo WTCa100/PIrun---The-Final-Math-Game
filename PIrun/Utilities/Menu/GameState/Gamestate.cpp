@@ -78,9 +78,11 @@ void GameState::initializeGame()
 	for (int i = 1; i <= this->GameAmmount; i++)
 	{
 		Problem* Prob = new Problem(this->GameDifficulty, i);
+		if (Prob->IsAnsGood()) { MathPlayer->AddPoint(Prob->GiveProblemPointWeight()); }
 		MathPlayer->AssignProblem(*Prob);
 		delete Prob;
 	}
+	gameSummary(*MathPlayer);
 	system("cls");
 	std::cout << "DEBUG: DISPLAY\n";
 	system("Pause");
@@ -93,6 +95,11 @@ void GameState::initializeGame()
 	saveProblem(*MathPlayer);
 	std::cout << "Saved!\n";
 	system("Pause");
+	std::cout << "DEBUG: SAVING PLAYER INFO\n";
+	std::cout << "Saving game files\n";
+	savePlayerToScoreboard(*MathPlayer);
+	std::cout << "saved!\n";
+	system("Pause");
 	delete MathPlayer;
 }
 
@@ -104,6 +111,22 @@ void GameState::saveProblem(Player whoPlayed)
 	SaveTxt.open(_saveDIR);
 	whoPlayed.SavePlayerProgress(SaveTxt);
 	SaveTxt.close();
+}
+void GameState::savePlayerToScoreboard(Player whoToSign)
+{
+	std::string _saveDIR = SCORES;
+	std::string _saveFile = SCOREBOARD_CSV;
+	std::fstream saveToScoreboard;
+	saveToScoreboard.open(_saveDIR + '/' + _saveFile, std::ios::app);
+	whoToSign.SavePlayerToScoreboard(saveToScoreboard);
+	saveToScoreboard.close();
+
+}
+void GameState::gameSummary(Player whoPlayed)
+{
+	std::cout << "The game is over!\n";
+	std::cout << "You managed to earn " << whoPlayed.GiveFinalScores() << " points" << std::endl;
+	system("Pause");
 }
 // Set up game information
 // Difficulty

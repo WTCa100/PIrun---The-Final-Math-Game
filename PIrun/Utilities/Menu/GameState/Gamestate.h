@@ -17,7 +17,8 @@ private:
 	static bool lookForDir(std::string _DIRpath);
 	void initializeGame();
 	void saveProblem(Player whoPlayed);
-	bool checkIfForHighscore(Player whoPlayed); // Check if the player can be saved in Highscores.txt
+	static void savePlayerToScoreboard(Player whoToSign);
+	void gameSummary(Player whoPlayed);
 public:
 	int GameDifficulty, GameAmmount;
 	void GetDifficultyLevel();
