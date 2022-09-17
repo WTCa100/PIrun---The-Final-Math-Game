@@ -7,3 +7,4 @@
 
 #define HIGHSCORES_TXT "Highscores.txt"
 #define SCOREBOARD_CSV "Scoreboard.csv"
+#define DETAILS_CSV "Details.csv"
