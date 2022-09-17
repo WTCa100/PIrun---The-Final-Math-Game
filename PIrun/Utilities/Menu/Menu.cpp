@@ -181,11 +181,25 @@ void Menu::newGame()
 
 void Menu::showProblemList(int checkID)
 {
+	std::cout << "Show problem list placeholder\n";
 	return;
 }
 
 void Menu::showPlayerDetail(int checkID)
 {
+	GameState::LookAndDisplayPlayerDetails(GameState::LoadDetails(), checkID);
+	char nextAction;
+	std::string tmpValHolder;
+	do
+	{
+		std::cout << "Would you like to see his list of problems? [y/n]\n";
+		std::getline(std::cin, tmpValHolder);
+		if (!Validate::isYesNoValid(tmpValHolder)) std::cout << "Please enter valid option\n" << std::endl;
+	} while (!Validate::isYesNoValid(tmpValHolder));
+	nextAction = std::toupper(tmpValHolder[0]);
+	tmpValHolder.clear();
+	if (nextAction == 'Y')
+		showProblemList(checkID);
 	return;
 }
 
