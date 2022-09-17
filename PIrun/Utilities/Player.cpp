@@ -58,7 +58,7 @@ void Player::ShowPlayerDetails()
 	std::cout << "Name: " << strUsername << std::endl;
 	std::cout << "Number of problems solved: " << nGameAmmount << " - " << nGoodGameAmmount <<" of games were correct\n";
 	std::cout << std::setprecision(2) << std::fixed << "Ratio: " << nGoodGameAmmount / nGameAmmount << std::endl;
-	std::cout << "Points collected " << dbPointsEarned << std::endl
+	std::cout << "Points collected " << dbPointsEarned << std::endl;
 }
 
 void Player::ShowPlayerScoreboard()
