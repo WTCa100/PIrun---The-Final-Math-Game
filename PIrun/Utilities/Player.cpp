@@ -52,7 +52,10 @@ void Player::getInitialUserName()
 	} while (Validate::isEntryEmpty(this->strUsername));
 }
 
-
+void Player::ShowPlayerScoreboard()
+{
+	std::cout << nID << ": " << strUsername << " got " << dbPointsEarned << " points.\n";
+}
 
 double Player::GiveFinalScores()
 {
@@ -111,4 +114,6 @@ Player::Player(int id, std::string un, double points)
 	this->nID = id;
 	this->strUsername = un;
 	this->dbPointsEarned = points;
+	this->isInitialLaunch = false;
+	this->ProblemSet.clear();
 }
