@@ -161,3 +161,16 @@ Problem::Problem(int Difficulty, int _ID)
 	bIsAnsGood = wasAnswerGood(this->cAct);
 	problemSummary();
 }
+
+Problem::Problem(int nProbId, double dbPoints, double dbC1, char cAD, double dbC2, double dbSolutExp, double dbSolutActual, bool bWasGood)
+{
+	this->nDiff = 0; // Do not leave uninitialized variables
+	this->nProblemId = nProbId;
+	this->dbPointWeight = dbPoints;
+	this->dbComp1 = dbC1;
+	this->cAct = cAD;
+	this->dbComp2 = dbC2;
+	this->dbExpected = dbSolutExp;
+	this->dbActual = dbSolutActual;
+	this->bIsAnsGood = bWasGood;
+}

@@ -32,5 +32,7 @@ public:
 	void SaveProblem(std::ofstream &filePtr);
 	void showProblemDone();
 	int nProblemId;
-	Problem(int Difficulty, int _ID);
+	Problem(int Difficulty, int _ID); // Initializing problem constructor
+	Problem(int nProbId, double dbPoints, double dbC1, char cAD, double dbC2, double dbSolutExp, double dbSolutActual, bool bWasGood); 
+	// Constructor used for loading problems
 };
