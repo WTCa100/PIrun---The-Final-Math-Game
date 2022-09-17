@@ -52,6 +52,15 @@ void Player::getInitialUserName()
 	} while (Validate::isEntryEmpty(this->strUsername));
 }
 
+void Player::ShowPlayerDetails()
+{
+	std::cout << "ID: " << nID << std::endl;
+	std::cout << "Name: " << strUsername << std::endl;
+	std::cout << "Number of problems solved: " << nGameAmmount << " - " << nGoodGameAmmount <<" of games were correct\n";
+	std::cout << std::setprecision(2) << std::fixed << "Ratio: " << nGoodGameAmmount / nGameAmmount << std::endl;
+	std::cout << "Points collected " << dbPointsEarned << std::endl
+}
+
 void Player::ShowPlayerScoreboard()
 {
 	std::cout << nID << ": " << strUsername << " got " << dbPointsEarned << " points.\n";
@@ -60,6 +69,11 @@ void Player::ShowPlayerScoreboard()
 double Player::GiveFinalScores()
 {
 	return this->dbPointsEarned;
+}
+
+void Player::SavePlayerDetails(std::ofstream& filePtr)
+{
+	filePtr << this->nID << "," << this->strUsername << "," << this->nGameAmmount << ',' << this->nGoodGameAmmount << ',' << this->dbPointsEarned << std::endl;
 }
 
 void Player::SavePlayerProgress(std::ofstream &filePtr)
@@ -93,6 +107,9 @@ void Player::DisplayProblems()
 void Player::AssignProblem(Problem currentProblem)
 {
 	this->ProblemSet.insert(std::make_pair(currentProblem.nProblemId, currentProblem));
+	this->nGameAmmount++;
+	if (currentProblem.IsAnsGood())
+		nGoodGameAmmount++;
 }
 
 void Player::AddPoint(int dbPointValue)
