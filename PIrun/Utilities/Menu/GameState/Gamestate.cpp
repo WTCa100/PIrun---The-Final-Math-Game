@@ -80,6 +80,52 @@ void GameState::SearchForPlayer(int PlayerID)
 	loadDetails.close();
 }
 
+std::map<int,Player> GameState::LoadDetails()
+{
+	std::map<int, Player> mapOut;
+	std::string _DIR = DETAILED_RECORDS;
+	std::string _fileName = DETAILS_CSV;
+	std::ifstream detailFile;
+	std::string strLine;
+	char cDelimeter = ',';
+	detailFile.open(_DIR + '/' + _fileName);
+	if (!detailFile.is_open()) { std::cout << "Cannot load file.\n"; return; }
+	while (std::getline(detailFile, strLine))
+	{
+		if (strLine == "ID,Name,Number_of_Problems,Problems_Solved_Good,Points") continue;
+		int nCell = 1;
+		std::stringstream ssRow(strLine);
+		std::string rawData;
+		// Constructor tmp data holders
+		int* tmpId = new int; int* tmpProblemAmmount = new int; int* tmpProblemGoodAmmount = new int;
+		std::string* tmpUserName = new std::string;
+		double* tmpPoints = new double;
+		// Distinct info
+		while (std::getline(ssRow, rawData, cDelimeter))
+		{
+			switch (nCell)
+			{
+			case 1: *tmpId = std::stoi(rawData); break;
+			case 2: *tmpUserName = rawData; break;
+			case 3: *tmpProblemAmmount = std::stoi(rawData); break;
+			case 4: *tmpProblemGoodAmmount = std::stoi(rawData); break;
+			case 5: *tmpPoints = std::stod(rawData); break;
+			}
+			if (nCell == 5)
+			{
+				Player* tmpP = new Player(*tmpId, *tmpUserName, *tmpPoints);
+				mapOut.insert(std::make_pair(tmpP->givePlayerId(), tmpP));
+				delete tmpP;
+				delete tmpId; delete tmpUserName; delete tmpPoints; delete tmpProblemGoodAmmount; delete tmpProblemAmmount;
+				nCell = 1;
+			}
+			else nCell++;
+		}
+	}
+	detailFile.close();
+	return mapOut;
+}
+
 void GameState::LoadScoreboards()
 {
 	std::string _DIR = SCORES;

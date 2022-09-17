@@ -22,7 +22,8 @@ private:
 	void savePlayerDetails(Player whoToSign);
 	void gameSummary(Player whoPlayed);
 public:
-	static void SearchForPlayer(int PlayerID);
+	static void SearchForPlayerPset(int PlayerID);
+	static std::map<int,Player> LoadDetails();
 	static void LoadScoreboards();
 	int GameDifficulty, GameAmmount;
 	void GetDifficultyLevel();
