@@ -116,6 +116,15 @@ void Problem::problemSummary()
 
 
 
+bool Problem::IsAnsGood()
+{
+	return this->bIsAnsGood;
+}
+double Problem::GiveProblemPointWeight()
+{
+	return this->dbPointWeight;
+}
+
 void Problem::SaveProblem(std::ofstream& filePtr)
 {
 	filePtr << nProblemId << std::endl;

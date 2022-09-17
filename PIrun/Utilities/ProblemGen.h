@@ -26,8 +26,9 @@ private:
 	bool wasAnswerGood(char cActionDone);
 	void generateSelf();
 	void problemSummary();
-protected:
 public:
+	bool IsAnsGood();
+	double GiveProblemPointWeight();
 	void SaveProblem(std::ofstream &filePtr);
 	void showProblemDone();
 	int nProblemId;
