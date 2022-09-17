@@ -34,7 +34,8 @@ public:
 	void DisplayProblems(); // Debug
 	void AssignProblem(Problem currentProblem);
 	void AddPoint(int dbPointValue);
-	Player(bool isInitial);
+	Player(); // Default constructor USE WITH CAUTION
+	Player(bool isInitial); // Initializing constructor
 	Player(int id, std::string un, double points); // Scoreboard.csv loading constructor
 	Player(int id, std::string un, int nAmt, int nGAmt, double points); // Details.csv loading constructor
 };

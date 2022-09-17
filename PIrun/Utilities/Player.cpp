@@ -117,6 +117,17 @@ void Player::AddPoint(int dbPointValue)
 	this->dbPointsEarned += dbPointValue;
 }
 
+Player::Player()
+{
+	this->ProblemSet.clear();
+	this->dbPointsEarned = -1;
+	this->isInitialLaunch = 0;
+	this->nID = -1;
+	this->nGameAmmount = -1;
+	this->nGoodGameAmmount = -1;
+	this->strUsername = "Dummy";
+}
+
 Player::Player(bool isInitial)
 {
 	this->ProblemSet.clear();
