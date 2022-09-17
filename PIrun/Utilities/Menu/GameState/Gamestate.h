@@ -21,7 +21,9 @@ private:
 	static void savePlayerStats(Player whoToSign, int _Type);
 	void gameSummary(Player whoPlayed);
 public:
-	static void SearchForPlayerPset(int PlayerID);
+	static Player returnPlayer(int id);
+	static void displayPset(Player PDisp);
+	static void SearchForPlayerPset(Player& PSearchFor);
 	static void LookAndDisplayPlayerDetails(std::map<int, Player> mappedPlayers, int Id);
 	static std::map<int,Player> LoadDetails();
 	static void LoadScoreboards();

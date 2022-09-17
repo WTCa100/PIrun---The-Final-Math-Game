@@ -68,15 +68,70 @@ bool GameState::lookForDir(std::string _DIRpath)
 	return true;
 }
 
-void GameState::SearchForPlayerPset(int PlayerID)
+Player GameState::returnPlayer(int id)
 {
-	std::string _DIR = DETAILED_RECORDS;
-	std::string _fileName = DETAILS_CSV;
+	std::map<int, Player> tmpMap = LoadDetails();
+	return tmpMap[id];
+}
+
+void GameState::displayPset(Player PDisp)
+{
+	PDisp.DisplayProblems();
+}
+
+void GameState::SearchForPlayerPset(Player& PSearchFor)
+{
+	std::string _DIR = PROBLEM_SET;
+	std::string _fileName = std::to_string(PSearchFor.givePlayerId()) + ".txt";
 	std::ifstream loadDetails;
 	std::string strLine;
+	int nLine = 1;
 	loadDetails.open(_DIR + "/" + _fileName);
 	if (!loadDetails.is_open()) { std::cout << "No such file!\n"; return; }
-	// TODO make scores load into the memory
+	// Constructor tmp value holders
+	int *tmpId = new int; 
+	double* tmpComp1 = new double; double* tmpComp2 = new double; double* tmpExp = new double; double* tmpActual = new double; double* tmpPoints = new double;
+	char* tmpAct = new char;
+	bool* tmpCor = new bool;
+	while (std::getline(loadDetails, strLine))
+	{
+		switch (nLine)
+		{
+		case 1:
+			*tmpId = std::stoi(strLine);
+			break;
+		case 2:
+			*tmpPoints = std::stod(strLine);
+			break;
+		case 3:
+			*tmpComp1 = std::stod(strLine);
+			break;
+		case 4:
+			*tmpAct = strLine[0];
+			break;
+		case 5:
+			*tmpComp2 = std::stod(strLine);
+			break;
+		case 6:
+			*tmpExp = std::stod(strLine);
+			break;
+		case 7:
+			*tmpActual = std::stod(strLine);
+			break;
+		case 8:
+			*tmpCor = std::stoi(strLine);
+			break;
+		}
+		if (nLine == 8)
+		{
+			Problem* tmpProb = new Problem(*tmpId, *tmpPoints, *tmpComp1, *tmpAct, *tmpComp2, *tmpExp, *tmpActual, *tmpCor);
+			PSearchFor.AssignProblem(*tmpProb);
+			delete tmpProb;
+			nLine = 1;
+		}
+		else nLine++;
+	}
+	delete tmpAct; delete tmpActual; delete tmpComp1; delete tmpComp2; delete tmpCor; delete tmpExp; delete tmpId; delete tmpPoints;
 	loadDetails.close();
 }
 
