@@ -25,6 +25,9 @@ private:
 	bool lookForFile(std::string _DIRpath, std::string strFileName = "");
 	// Display Functions
 	void newGame();
+	void showProblemList(int checkID);
+	void showPlayerDetail(int checkID);
+	void scoreboardSectionMenu();
 	void showAboutMeSection();
 	void showScoreboard();
 	void showHighScores();

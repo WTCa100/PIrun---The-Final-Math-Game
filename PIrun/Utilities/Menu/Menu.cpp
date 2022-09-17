@@ -40,7 +40,7 @@ void Menu::mainDisplay()
 				newGame();
 				break;
 			case 2:
-				showScoreboard();
+				scoreboardSectionMenu();
 				break;
 			case 3:
 				showAboutMeSection();
@@ -166,6 +166,49 @@ void Menu::newGame()
 	GameState* GState = new GameState;
 
 	delete GState; // Remove this later
+}
+
+void Menu::showProblemList(int checkID)
+{
+	return;
+}
+
+void Menu::showPlayerDetail(int checkID)
+{
+	return;
+}
+
+void Menu::scoreboardSectionMenu()
+{
+	showScoreboard();
+	bool bIsInputCorrect = false;
+	std::string strTmpDataHolder;
+	do
+	{
+		std::cout << "If you want to see detailed player record input player ID\n";
+		std::cout << "If you want to see highscores type \"Highscores\" or simply \"h\"\n";
+		std::cout << "If you want to go back to main menu type \"Exit\" or simply press enter\n";
+		std::getline(std::cin, strTmpDataHolder);
+		if (strTmpDataHolder.empty() || Validate::MakeUpper(strTmpDataHolder) == "EXIT")
+			bIsInputCorrect = true;
+		else
+		{
+			if (Validate::isInputNumber(strTmpDataHolder))
+			{
+				showPlayerDetail(std::stoi(strTmpDataHolder));
+				bIsInputCorrect = true;
+			}
+			else
+			{
+				if (strTmpDataHolder == "HIGHSCORES" || std::toupper(strTmpDataHolder[0]) == 'H')
+				{
+					showHighScores();
+					bIsInputCorrect = true;
+				}
+				else std::cout << "Enter a valid option\n";
+			}
+		}
+	} while (!bIsInputCorrect);
 }
 
 void Menu::showAboutMeSection()
