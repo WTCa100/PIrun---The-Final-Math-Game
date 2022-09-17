@@ -136,8 +136,17 @@ void Menu::makeFile(std::string _DIRpath, std::string strFileName)
 	std::cout << "Creating " << strFileName << " at " << _DIRpath << std::endl;
 	filePlace.open(_path);
 	if (strFileName == SCOREBOARD_CSV)
+	{
 		filePlace << "ID," << "Name," << "Points\n";
-	filePlace.close();
+		filePlace.close();
+		return;
+	}
+	if (strFileName == DETAILS_CSV)
+	{
+		filePlace << "ID,Name,Number_of_Problems,Problems_Solved_Good,Points" << std::endl;
+		filePlace.close();
+		return;
+	}
 }
 
 bool Menu::lookForFile(std::string _DIRpath, std::string strFileName)
