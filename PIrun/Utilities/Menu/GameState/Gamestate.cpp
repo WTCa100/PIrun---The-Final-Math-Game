@@ -68,6 +68,46 @@ bool GameState::lookForDir(std::string _DIRpath)
 	return true;
 }
 
+void GameState::LoadScoreboards()
+{
+	std::string _DIR = SCORES;
+	std::string _fileName = SCOREBOARD_CSV;
+	std::ifstream ScoreboardFile;
+	std::string strLine;
+	char cDelimeter = ',';
+	ScoreboardFile.open(_DIR + '/' + _fileName);
+	while (std::getline(ScoreboardFile, strLine))
+	{
+		if (strLine == "ID,Name,Points") continue;
+		int nCell = 1;
+		std::stringstream ssRow(strLine);
+		std::string rawData;
+		// Constructor tmp value collectors
+		int* tmpId = new int;
+		std::string* tmpUserName = new std::string;
+		double* tmpPoints = new double;
+		while (std::getline(ssRow, rawData, cDelimeter))
+		{
+			switch (nCell)
+			{
+			case 1: *tmpId = std::stoi(rawData); break;
+			case 2: *tmpUserName = rawData; break;
+			case 3: *tmpPoints = std::stod(rawData); break;
+			}
+			if (nCell == 3)
+			{
+				Player* tmpP = new Player(*tmpId, *tmpUserName, *tmpPoints);
+				tmpP->ShowPlayerScoreboard();
+				delete tmpP;
+				delete tmpId; delete tmpUserName; delete tmpPoints;
+				nCell = 1;
+			}
+			else nCell++;
+		}
+	}
+	ScoreboardFile.close();
+}
+
 // Set up the game 
 
 void GameState::initializeGame()

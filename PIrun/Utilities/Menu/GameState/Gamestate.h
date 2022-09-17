@@ -20,6 +20,7 @@ private:
 	static void savePlayerToScoreboard(Player whoToSign);
 	void gameSummary(Player whoPlayed);
 public:
+	static void LoadScoreboards();
 	int GameDifficulty, GameAmmount;
 	void GetDifficultyLevel();
 	void GetGameAmmount();
