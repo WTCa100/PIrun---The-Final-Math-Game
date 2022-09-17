@@ -71,7 +71,7 @@ double Player::GiveFinalScores()
 	return this->dbPointsEarned;
 }
 
-void Player::SavePlayerDetails(std::ofstream& filePtr)
+void Player::SavePlayerDetails(std::fstream& filePtr)
 {
 	filePtr << this->nID << "," << this->strUsername << "," << this->nGameAmmount << ',' << this->nGoodGameAmmount << ',' << this->dbPointsEarned << std::endl;
 }

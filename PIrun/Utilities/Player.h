@@ -27,7 +27,7 @@ public:
 	void ShowPlayerDetails();
 	void ShowPlayerScoreboard();
 	double GiveFinalScores(); // Only use this method at the end of gameplay
-	void SavePlayerDetails(std::ofstream& filePtr);
+	void SavePlayerDetails(std::fstream& filePtr);
 	void SavePlayerProgress(std::ofstream &filePtr);
 	void SavePlayerToScoreboard(std::fstream& filePtr); // Todo save player to scoreboard.csv
 	int givePlayerId();
