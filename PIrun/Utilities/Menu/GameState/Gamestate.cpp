@@ -150,7 +150,8 @@ void GameState::initializeGame()
 	system("Pause");
 	std::cout << "DEBUG: SAVING PLAYER INFO\n";
 	std::cout << "Saving game files\n";
-	savePlayerToScoreboard(*MathPlayer);
+	savePlayerStats(*MathPlayer, 1);
+	savePlayerStats(*MathPlayer, 2);
 	std::cout << "saved!\n";
 	system("Pause");
 	delete MathPlayer;
@@ -165,16 +166,37 @@ void GameState::saveProblem(Player whoPlayed)
 	whoPlayed.SavePlayerProgress(SaveTxt);
 	SaveTxt.close();
 }
-void GameState::savePlayerToScoreboard(Player whoToSign)
+void GameState::savePlayerStats(Player whoToSign, int _Type)
 {
+	std::string _saveDIR;
+	std::string _saveFile;
+	switch (_Type)
+	{
+	case 1:
+		_saveDIR = SCORES;
+		_saveFile = SCOREBOARD_CSV;
+		break;
+	case 2:
+		_saveDIR = DETAILED_RECORDS;
+		_saveFile = DETAILS_CSV;
+	}
 	std::string _saveDIR = SCORES;
 	std::string _saveFile = SCOREBOARD_CSV;
-	std::fstream saveToScoreboard;
-	saveToScoreboard.open(_saveDIR + '/' + _saveFile, std::ios::app);
-	whoToSign.SavePlayerToScoreboard(saveToScoreboard);
-	saveToScoreboard.close();
+	std::fstream savePlayerInfo;
+	savePlayerInfo.open(_saveDIR + '/' + _saveFile, std::ios::app);
+	switch (_Type)
+	{
+	case 1:
+		whoToSign.SavePlayerToScoreboard(savePlayerInfo);
+		break;
+	case 2:
+		whoToSign.SavePlayerDetails(savePlayerInfo);
+		break;
+	}
+	savePlayerInfo.close();
 
 }
+
 void GameState::gameSummary(Player whoPlayed)
 {
 	std::cout << "The game is over!\n";

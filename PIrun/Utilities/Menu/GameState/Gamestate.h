@@ -18,7 +18,8 @@ private:
 	static bool lookForDir(std::string _DIRpath);
 	void initializeGame();
 	void saveProblem(Player whoPlayed);
-	static void savePlayerToScoreboard(Player whoToSign);
+	static void savePlayerStats(Player whoToSign, int _Type);
+	void savePlayerDetails(Player whoToSign);
 	void gameSummary(Player whoPlayed);
 public:
 	static void SearchForPlayer(int PlayerID);
