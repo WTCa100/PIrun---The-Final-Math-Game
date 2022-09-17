@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <fstream>
+#include <map>
 
 #include"MaxValues.h"
 #include"../Pathing/Paths.h"
@@ -20,6 +21,7 @@ private:
 	static void savePlayerToScoreboard(Player whoToSign);
 	void gameSummary(Player whoPlayed);
 public:
+	static void SearchForPlayer(int PlayerID);
 	static void LoadScoreboards();
 	int GameDifficulty, GameAmmount;
 	void GetDifficultyLevel();

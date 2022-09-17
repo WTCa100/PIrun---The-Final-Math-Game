@@ -68,6 +68,18 @@ bool GameState::lookForDir(std::string _DIRpath)
 	return true;
 }
 
+void GameState::SearchForPlayer(int PlayerID)
+{
+	std::string _DIR = DETAILED_RECORDS;
+	std::string _fileName = DETAILS_CSV;
+	std::ifstream loadDetails;
+	std::string strLine;
+	loadDetails.open(_DIR + "/" + _fileName);
+	if (!loadDetails.is_open()) { std::cout << "No such file!\n"; return; }
+	// TODO make scores load into the memory
+	loadDetails.close();
+}
+
 void GameState::LoadScoreboards()
 {
 	std::string _DIR = SCORES;
@@ -76,6 +88,7 @@ void GameState::LoadScoreboards()
 	std::string strLine;
 	char cDelimeter = ',';
 	ScoreboardFile.open(_DIR + '/' + _fileName);
+	if (!ScoreboardFile.is_open()) { std::cout << "No such file!\n"; return; }
 	while (std::getline(ScoreboardFile, strLine))
 	{
 		if (strLine == "ID,Name,Points") continue;
