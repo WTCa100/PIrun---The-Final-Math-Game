@@ -68,7 +68,7 @@ bool GameState::lookForDir(std::string _DIRpath)
 	return true;
 }
 
-void GameState::SearchForPlayer(int PlayerID)
+void GameState::SearchForPlayerPset(int PlayerID)
 {
 	std::string _DIR = DETAILED_RECORDS;
 	std::string _fileName = DETAILS_CSV;
@@ -167,7 +167,7 @@ void GameState::LoadScoreboards()
 	ScoreboardFile.close();
 }
 
-// Set up the game 
+// Make the game
 
 void GameState::initializeGame()
 {

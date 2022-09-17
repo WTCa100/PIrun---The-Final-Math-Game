@@ -19,7 +19,6 @@ private:
 	void initializeGame();
 	void saveProblem(Player whoPlayed);
 	static void savePlayerStats(Player whoToSign, int _Type);
-	void savePlayerDetails(Player whoToSign);
 	void gameSummary(Player whoPlayed);
 public:
 	static void SearchForPlayerPset(int PlayerID);
