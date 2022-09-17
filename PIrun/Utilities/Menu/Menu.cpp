@@ -181,7 +181,9 @@ void Menu::newGame()
 
 void Menu::showProblemList(int checkID)
 {
-	std::cout << "Show problem list placeholder\n";
+	Player ThisPlayerProblem = GameState::returnPlayer(checkID);
+	GameState::SearchForPlayerPset(ThisPlayerProblem);
+	ThisPlayerProblem.DisplayProblems();
 	return;
 }
 
