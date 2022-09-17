@@ -36,4 +36,5 @@ public:
 	void AddPoint(int dbPointValue);
 	Player(bool isInitial);
 	Player(int id, std::string un, double points); // Scoreboard.csv loading constructor
+	Player(int id, std::string un, int nAmt, int nGAmt, double points); // Details.csv loading constructor
 };

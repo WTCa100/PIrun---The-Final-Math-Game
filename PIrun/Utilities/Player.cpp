@@ -134,3 +134,14 @@ Player::Player(int id, std::string un, double points)
 	this->isInitialLaunch = false;
 	this->ProblemSet.clear();
 }
+
+Player::Player(int id, std::string un, int nAmt, int nGAmt, double points)
+{
+	this->nID = id;
+	this->strUsername = un;
+	this->nGameAmmount = nAmt;
+	this->nGoodGameAmmount = nGAmt;
+	this->dbPointsEarned = points;
+	this->isInitialLaunch = false;
+	this->ProblemSet.clear();
+}
