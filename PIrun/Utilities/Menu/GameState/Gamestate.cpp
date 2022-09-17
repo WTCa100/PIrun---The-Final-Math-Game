@@ -180,8 +180,6 @@ void GameState::savePlayerStats(Player whoToSign, int _Type)
 		_saveDIR = DETAILED_RECORDS;
 		_saveFile = DETAILS_CSV;
 	}
-	std::string _saveDIR = SCORES;
-	std::string _saveFile = SCOREBOARD_CSV;
 	std::fstream savePlayerInfo;
 	savePlayerInfo.open(_saveDIR + '/' + _saveFile, std::ios::app);
 	switch (_Type)
