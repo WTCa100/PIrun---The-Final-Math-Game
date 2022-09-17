@@ -105,12 +105,14 @@ void Menu::checkEssentialFiles()
 {
 	checkScores(HIGHSCORES_TXT);
 	checkScores(SCOREBOARD_CSV);
+	checkScores(DETAILS_CSV, DETAILED_RECORDS);
 }
 
 void Menu::makeInitialFiles()
 {
 	makeFile(SCORES, HIGHSCORES_TXT);
 	makeFile(SCORES, SCOREBOARD_CSV);
+	makeFile(DETAILED_RECORDS, DETAILS_CSV);
 }
 
 void Menu::checkScores(std::string strFileName, std::string _DIRpath)
@@ -118,10 +120,10 @@ void Menu::checkScores(std::string strFileName, std::string _DIRpath)
 	bool bIsFileGood;
 	do
 	{
-		if (!lookForFile(SCORES, strFileName))
+		if (!lookForFile(_DIRpath, strFileName))
 		{
 			bIsFileGood = false;
-			makeFile(SCORES, strFileName);
+			makeFile(_DIRpath, strFileName);
 		}
 		else
 			bIsFileGood = true;
