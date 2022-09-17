@@ -1,6 +1,11 @@
 #include "InputCheck.h"
 #pragma once
 
+bool Validate::isYesNoValid(std::string strSample)
+{
+	return std::toupper(strSample[0]) == 'Y' || std::toupper(strSample[0] == 'N');
+}
+
 bool Validate::isEntryEmpty(std::string strSample)
 {
 	return strSample.empty();
