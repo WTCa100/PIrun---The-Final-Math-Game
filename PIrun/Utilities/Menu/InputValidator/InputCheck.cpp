@@ -47,6 +47,17 @@ bool Validate::isInputNumber(std::string strSample)
 	return true;
 }
 
+std::string Validate::MakeUpper(std::string& strSample)
+{
+	for (int i = 0; i != strSample.size(); i++)
+	{
+		strSample[i] = std::toupper(strSample[i]);
+	}
+	return strSample;
+}
+
+
+
 Validate::Validate(std::string strInput)
 {
 	this->strCheck = strInput;
