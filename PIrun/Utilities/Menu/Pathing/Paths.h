@@ -5,6 +5,6 @@
 
 #define MAKE_FILES "Utilities\\Fmake\\"
 
-#define HIGHSCORES_TXT "Highscores.txt"
+#define HIGHSCORES_CSV "Highscores.csv"
 #define SCOREBOARD_CSV "Scoreboard.csv"
 #define DETAILS_CSV "Details.csv"
