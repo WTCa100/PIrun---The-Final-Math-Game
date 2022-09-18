@@ -49,7 +49,14 @@ bool Validate::isInputNumber(std::string strSample)
 			return false;
 	}
 
-	return true;
+
+void Validate::swapCommaToDot(std::string& strToModify)
+{
+	size_t commaPos = strToModify.find(','); 
+	if (commaPos == std::string::npos)
+		return;
+	strToModify[commaPos] = '.';
+	return;
 }
 
 std::string Validate::MakeUpper(std::string& strSample)
