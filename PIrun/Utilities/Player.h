@@ -38,4 +38,6 @@ public:
 	Player(bool isInitial); // Initializing constructor
 	Player(int id, std::string un, double points); // Scoreboard.csv loading constructor
 	Player(int id, std::string un, int nAmt, int nGAmt, double points); // Details.csv loading constructor
+	friend bool operator<(Player const& P1, Player const& P2); // Sorting purposes
+	friend bool operator==(Player const& P1, Player const& P2); // Assigning purposes
 };
