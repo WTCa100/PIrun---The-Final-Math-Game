@@ -24,6 +24,7 @@ private:
 	int getHighestId();
 	void getInitialUserName(); // Constructor - get player nickname info
 public:
+	void SavePlayerToHighscores(std::ofstream& filePtr);
 	void ShowPlayerDetails();
 	void ShowPlayerScoreboard();
 	double GiveFinalScores(); // Only use this method at the end of gameplay

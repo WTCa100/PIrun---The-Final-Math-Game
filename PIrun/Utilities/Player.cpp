@@ -52,6 +52,11 @@ void Player::getInitialUserName()
 	} while (Validate::isEntryEmpty(this->strUsername));
 }
 
+void Player::SavePlayerToHighscores(std::ofstream& filePtr)
+{
+	filePtr << this->strUsername << ',' << this->nID << ',' << this->dbPointsEarned << std::endl;
+}
+
 void Player::ShowPlayerDetails()
 {
 	std::cout << "ID: " << nID << std::endl;
