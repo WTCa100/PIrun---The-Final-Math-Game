@@ -160,6 +160,8 @@ Problem::Problem(int Difficulty, int _ID)
 	dbActual = GetUserInput();
 	bIsAnsGood = wasAnswerGood(this->cAct);
 	problemSummary();
+	system("pause");
+	system("cls");
 }
 
 Problem::Problem(int nProbId, double dbPoints, double dbC1, char cAD, double dbC2, double dbSolutExp, double dbSolutActual, bool bWasGood)
