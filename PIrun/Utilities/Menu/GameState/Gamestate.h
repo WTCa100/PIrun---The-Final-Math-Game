@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <map>
+#include <vector>
 
 #include"MaxValues.h"
 #include"../Pathing/Paths.h"
@@ -12,6 +13,7 @@
 class GameState
 {
 private:
+	static std::vector<Player> populateVectorWithHighscores(std::map<int, Player> getFrom);
 	static bool addToHighScores(Player checkPlayer);
 	static bool comparePlayers(std::pair<int, Player> a, std::pair<int, Player> b);
 	static void addPlayerToHighScores(Player P1, std::map<int, Player> mappedHighscores);

@@ -4,6 +4,15 @@ struct stat info;
 
 bool GameState::InitialBootUp;
 
+
+std::vector<Player> GameState::populateVectorWithHighscores(std::map<int, Player> getFrom)
+{
+	std::vector<Player> vecsOut;
+	for (auto i = getFrom.begin(); i != getFrom.end(); i++)
+		vecsOut.push_back(i->second);
+	return vecsOut;
+}
+
 bool GameState::addToHighScores(Player checkPlayer)
 {
 	std::map<int, Player> mappedHighscores = GameState::loadPlayersHighscores();
@@ -22,48 +31,51 @@ void GameState::addPlayerToHighScores(Player P1, std::map<int, Player> mappedHig
 	int nPosition = 1;
 	bool bIsPositionLast = false;
 	Player* PrevPosition = new Player;
+	// If the size of mappedHighscores is lower than 10
 	if (mappedHighscores.size() < 10)
 	{
-		for (auto i = mappedHighscores.begin(); i != mappedHighscores.end(); i++)
+		std::vector<Player> vecsHighscores = populateVectorWithHighscores(mappedHighscores); // Save scores into a vector in the same order
+
+		mappedHighscores.clear(); // Remove values from mapped highscores
+		for (int i = 0; i < vecsHighscores.size(); i++)
 		{
-			if (nPosition == mappedHighscores.size())
-				mappedHighscores.insert(std::make_pair(nPosition, P1));
-			if (nPosition == 1)
-			{
-				if (!(P1 < i->second))
-					i->second = P1;
-			}
+			if (i == vecsHighscores.size() - 1) { vecsHighscores.push_back(P1); break; } // Do the checking
 			else
 			{
-				if (!(P1 < i->second))
+				if (i == 0) { if (vecsHighscores[i] < P1) { vecsHighscores.insert(vecsHighscores.begin(), P1); break; } }
+				else
 				{
-					if (P1 < *PrevPosition)
-						i->second = P1;
+					if (P1 < vecsHighscores[i] && vecsHighscores[i - 1] < P1) { vecsHighscores.insert(vecsHighscores.begin() + i, P1); return; }
 				}
 			}
-			nPosition++;
-			*PrevPosition = i->second;
+		}
+		if (vecsHighscores.empty())
+			vecsHighscores.push_back(P1);
+		if (vecsHighscores.size() > 10) // If its bigger than 10 delete last element
+			vecsHighscores.pop_back();
+		for (int i = 0; i < vecsHighscores.size(); i++) // repopulate mappedHighscores
+		{
+			mappedHighscores.insert(std::make_pair(i + 1, vecsHighscores[i]));
 		}
 	}
+	// If the size of mappedHighscores is greater or equalt to 10
 	else
 	{
 		for (auto i = mappedHighscores.begin(); i != mappedHighscores.end(); i++)
 		{
 			if (nPosition == 1)
 			{
-				if (!(P1 < i->second))
-					i->second = P1;
+				if (i->second < P1){mappedHighscores[nPosition] = P1; break;}
 			}
 			else
 			{
-				if (!(P1 < i->second))
+				if (P1 < PrevPosition && i->second < P1)
 				{
-					if (P1 < *PrevPosition)
-						i->second = P1;
+					if (i->second < P1) { mappedHighscores[nPosition] = P1; break; }
 				}
 			}
 			nPosition++;
-			*PrevPosition = i->second;
+			PrevPosition = &i->second;
 		}
 	}
 	delete PrevPosition;
@@ -380,21 +392,12 @@ void GameState::initializeGame()
 		MathPlayer->AssignProblem(*Prob);
 		delete Prob;
 	}
+	system("cls");
 	gameSummary(*MathPlayer);
 	system("cls");
-	std::cout << "DEBUG: DISPLAY\n";
 	system("Pause");
 	MathPlayer->DisplayProblems();
-	std::cout << "END DEBUG: DISPLAY\n";
-	system("Pause");
-	system("cls");
-	std::cout << "DEBUG: Saving\n";
-	std::cout << "saving game files\n";
 	saveProblem(*MathPlayer);
-	std::cout << "Saved!\n";
-	system("Pause");
-	std::cout << "DEBUG: SAVING PLAYER INFO\n";
-	std::cout << "Saving game files\n";
 	savePlayerStats(*MathPlayer, 1);
 	savePlayerStats(*MathPlayer, 2);
 	if (GameState::addToHighScores(*MathPlayer))
