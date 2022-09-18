@@ -18,7 +18,7 @@ bool Validate::isWithtinRange(int nSample, int nMaxVal, int nMinVal)
 	return true;
 }
 
-bool Validate::isInputNumber(std::string strSample)
+bool Validate::isInputNumber(std::string& strSample)
 {
 	if (Validate::isEntryEmpty(strSample))
 		return false;
@@ -48,6 +48,9 @@ bool Validate::isInputNumber(std::string strSample)
 		if (!isdigit(strSample[i]))
 			return false;
 	}
+	Validate::swapCommaToDot(strSample);
+	return true;
+}
 
 
 void Validate::swapCommaToDot(std::string& strToModify)
