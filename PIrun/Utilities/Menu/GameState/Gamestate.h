@@ -13,32 +13,41 @@
 class GameState
 {
 private:
+	// Loading scores
+	// TODO: Load highscores into the memory.
 	static std::vector<Player> populateVectorWithHighscores(std::map<int, Player> getFrom);
 	static bool addToHighScores(Player checkPlayer);
-	static bool comparePlayers(std::pair<int, Player> a, std::pair<int, Player> b);
 	static void addPlayerToHighScores(Player P1, std::map<int, Player> mappedHighscores);
-	static void saveNewHighscores(std::map<int, Player> newMappedHighscores);
 	static std::map<int, Player> loadPlayersHighscores();
 	static double highestScore(std::map<int, Player>& checkHighscores);
+	// Checking Directories
 	static void makeDir(int fileType);
 	static void checkEssentialDirectories();
 	static void checkDir(std::string _FILENAME);
 	static bool lookForDir(std::string _DIRpath);
+	// Actual gameplay
 	void initializeGame();
-	void saveProblem(Player whoPlayed);
-	static void savePlayerStats(Player whoToSign, int _Type);
 	void gameSummary(Player whoPlayed);
+	// Saving scores
+	void saveProblem(Player whoPlayed);
+	static void saveNewHighscores(std::map<int, Player> newMappedHighscores);
+	static void savePlayerStats(Player whoToSign, int _Type);
 public:
-	static Player returnPlayer(int id);
-	static void displayPset(Player PDisp);
+	// Loading scores, details and Psets
+	static void LoadScoreboards();
 	static void SearchForPlayerPset(Player& PSearchFor);
+	static Player returnPlayer(int id);
 	static void LookAndDisplayPlayerDetails(std::map<int, Player> mappedPlayers, int Id);
 	static std::map<int,Player> LoadDetails();
-	static void LoadScoreboards();
+	// Display functions
+	static void displayPset(Player PDisp);
+	// Get values
 	int GameDifficulty, GameAmmount;
 	void GetDifficultyLevel();
 	void GetGameAmmount();
+	// Initial boot up functions
 	static bool InitialBootUp;
 	static void Setup();
+	// Actual gameplay
 	GameState();
 };

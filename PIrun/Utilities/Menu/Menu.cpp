@@ -255,5 +255,6 @@ void Menu::showScoreboard()
 
 void Menu::showHighScores()
 {
+	//TODO update this
 	std::cout << "Highscores section\n";
 }

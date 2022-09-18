@@ -28,9 +28,10 @@ private:
 	void showProblemList(int checkID);
 	void showPlayerDetail(int checkID);
 	void scoreboardSectionMenu();
-	void showAboutMeSection();
 	void showScoreboard();
 	void showHighScores();
+	// Sub-Menus
+	void showAboutMeSection();
 protected:
 	bool InitialBootUp;
 	int nGameDiff;

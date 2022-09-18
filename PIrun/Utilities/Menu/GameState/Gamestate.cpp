@@ -1,10 +1,11 @@
 #include"Gamestate.h"
 
-struct stat info;
+struct stat info; // checking DIR
 
-bool GameState::InitialBootUp;
+bool GameState::InitialBootUp; // Initialize the static value
 
-
+// Loading scores
+// Makes a vector copy of map
 std::vector<Player> GameState::populateVectorWithHighscores(std::map<int, Player> getFrom)
 {
 	std::vector<Player> vecsOut;
@@ -12,25 +13,17 @@ std::vector<Player> GameState::populateVectorWithHighscores(std::map<int, Player
 		vecsOut.push_back(i->second);
 	return vecsOut;
 }
-
+// Checks if Player instance is eligable to be in highscores 
 bool GameState::addToHighScores(Player checkPlayer)
 {
 	std::map<int, Player> mappedHighscores = GameState::loadPlayersHighscores();
-	if (mappedHighscores.size() < 10)
+	if (mappedHighscores.size() < 10) // If there are less than 10 entries in highscores then it always returns true
 		return true;
 	return checkPlayer.GiveFinalScores() > GameState::highestScore(mappedHighscores);
 }
-
-bool GameState::comparePlayers(std::pair<int, Player> a, std::pair<int, Player> b)
-{
-	return a < b;
-}
-
+// Adds Player to highscores
 void GameState::addPlayerToHighScores(Player P1, std::map<int, Player> mappedHighscores)
 {
-	int nPosition = 1;
-	bool bIsPositionLast = false;
-	Player* PrevPosition = new Player;
 	// If the size of mappedHighscores is lower than 10
 	if (mappedHighscores.size() < 10)
 	{
@@ -49,7 +42,7 @@ void GameState::addPlayerToHighScores(Player P1, std::map<int, Player> mappedHig
 				}
 			}
 		}
-		if (vecsHighscores.empty())
+		if (vecsHighscores.empty()) // If it's empty push_back player value
 			vecsHighscores.push_back(P1);
 		if (vecsHighscores.size() > 10) // If its bigger than 10 delete last element
 			vecsHighscores.pop_back();
@@ -57,19 +50,22 @@ void GameState::addPlayerToHighScores(Player P1, std::map<int, Player> mappedHig
 		{
 			mappedHighscores.insert(std::make_pair(i + 1, vecsHighscores[i]));
 		}
+		vecsHighscores.clear(); // Remove the info from vector
 	}
 	// If the size of mappedHighscores is greater or equalt to 10
 	else
 	{
+		int nPosition = 1;
+		Player* PrevPosition = new Player;
 		for (auto i = mappedHighscores.begin(); i != mappedHighscores.end(); i++)
 		{
-			if (nPosition == 1)
+			if (nPosition == 1) // If first position
 			{
-				if (i->second < P1){mappedHighscores[nPosition] = P1; break;}
+				if (i->second < P1){mappedHighscores[nPosition] = P1; break;} // If score of Player mapped on i-th position is less than current player's update first place
 			}
 			else
 			{
-				if (P1 < PrevPosition && i->second < P1)
+				if (P1 < PrevPosition && i->second < P1) // If score of Player mapped on i-th positon is less than current player's and i-th - 1 position is higher than update the i-th position entry
 				{
 					if (i->second < P1) { mappedHighscores[nPosition] = P1; break; }
 				}
@@ -77,31 +73,11 @@ void GameState::addPlayerToHighScores(Player P1, std::map<int, Player> mappedHig
 			nPosition++;
 			PrevPosition = &i->second;
 		}
+		delete PrevPosition;
 	}
-	delete PrevPosition;
 	saveNewHighscores(mappedHighscores);
 }
-
-void GameState::saveNewHighscores(std::map<int, Player> newMappedHighscores)
-{
-	std::string _DIR = SCORES;
-	std::string _fileName = HIGHSCORES_CSV;
-	std::ofstream highscoresFile;
-	highscoresFile.open(_DIR + '/' + _fileName);
-	if (!highscoresFile.is_open()) { std::cout << "No such file!\n"; return; }
-	highscoresFile << "Place,Name,ID,Points" << std::endl;
-	for (auto& i : newMappedHighscores)
-	{
-		highscoresFile << i.first << ',';
-		i.second.SavePlayerToHighscores(highscoresFile);
-	}
-}
-
-double GameState::highestScore(std::map<int, Player>& checkHighscores)
-{
-	return checkHighscores[1].GiveFinalScores();
-}
-
+// Loads highscores into memory (via std::map)
 std::map<int, Player> GameState::loadPlayersHighscores()
 {
 	std::map <int, Player> mapOut;
@@ -121,7 +97,7 @@ std::map<int, Player> GameState::loadPlayersHighscores()
 		// Constructor comp.
 		std::string* tmpUsername = new std::string;
 		int* tmpId = new int; double* tmpPoints = new double;
-		// Get those values
+		// Get specific data values
 		std::stringstream ssRow(strLine);
 		while (std::getline(ssRow, rawData, cDelimeter))
 		{
@@ -152,7 +128,13 @@ std::map<int, Player> GameState::loadPlayersHighscores()
 	}
 	return mapOut;
 }
+// Returns the first player 
+double GameState::highestScore(std::map<int, Player>& checkHighscores)
+{
+	return checkHighscores[1].GiveFinalScores(); // Maps are ordered by their keys so it will always return scores of the first player
+}
 
+// Checing Directories
 // Creates directory
 void GameState::makeDir(int fileType)
 {
@@ -175,7 +157,6 @@ void GameState::makeDir(int fileType)
 	_exBatFile += " >nul"; // This is used to not display logs from cmdlet
 	system(_exBatFile.c_str());
 }
-
 // Sends different queries to check
 void GameState::checkEssentialDirectories()
 {
@@ -183,7 +164,6 @@ void GameState::checkEssentialDirectories()
 	checkDir(DETAILED_RECORDS);
 	checkDir(PROBLEM_SET);
 }
-
 // Functions checks and makes files found missing
 void GameState::checkDir(std::string _FILENAME)
 {
@@ -217,15 +197,139 @@ bool GameState::lookForDir(std::string _DIRpath)
 	return true;
 }
 
-Player GameState::returnPlayer(int id)
+// Actual Gameplay 
+
+void GameState::initializeGame()
 {
-	std::map<int, Player> tmpMap = LoadDetails();
-	return tmpMap[id];
+	Player* MathPlayer = new Player(this->InitialBootUp);
+	GetDifficultyLevel();
+	GetGameAmmount();
+	for (int i = 1; i <= this->GameAmmount; i++)
+	{
+		Problem* Prob = new Problem(this->GameDifficulty, i);
+		if (Prob->IsAnsGood()) { MathPlayer->AddPoint(Prob->GiveProblemPointWeight()); }
+		MathPlayer->AssignProblem(*Prob);
+		delete Prob;
+	}
+	system("cls");
+	gameSummary(*MathPlayer);
+	system("cls");
+	system("Pause");
+	MathPlayer->DisplayProblems();
+	saveProblem(*MathPlayer);
+	savePlayerStats(*MathPlayer, 1);
+	savePlayerStats(*MathPlayer, 2);
+	if (GameState::addToHighScores(*MathPlayer))
+		GameState::addPlayerToHighScores(*MathPlayer, GameState::loadPlayersHighscores());
+	std::cout << "saved!\n";
+	system("Pause");
+	delete MathPlayer;
 }
 
-void GameState::displayPset(Player PDisp)
+void GameState::gameSummary(Player whoPlayed)
 {
-	PDisp.DisplayProblems();
+	std::cout << "The game is over!\n";
+	std::cout << "You managed to earn " << whoPlayed.GiveFinalScores() << " points" << std::endl;
+	system("Pause");
+}
+
+// Saving scores
+
+void GameState::saveNewHighscores(std::map<int, Player> newMappedHighscores)
+{
+	std::string _DIR = SCORES;
+	std::string _fileName = HIGHSCORES_CSV;
+	std::ofstream highscoresFile;
+	highscoresFile.open(_DIR + '/' + _fileName);
+	if (!highscoresFile.is_open()) { std::cout << "No such file!\n"; return; }
+	highscoresFile << "Place,Name,ID,Points" << std::endl;
+	for (auto& i : newMappedHighscores)
+	{
+		highscoresFile << i.first << ',';
+		i.second.SavePlayerToHighscores(highscoresFile);
+	}
+}
+
+void GameState::saveProblem(Player whoPlayed)
+{
+	std::ofstream SaveTxt;
+	std::string _saveDIR = PROBLEM_SET;
+	_saveDIR += '/' + std::to_string(whoPlayed.givePlayerId()) + ".txt";
+	SaveTxt.open(_saveDIR);
+	whoPlayed.SavePlayerProgress(SaveTxt);
+	SaveTxt.close();
+}
+
+void GameState::savePlayerStats(Player whoToSign, int _Type)
+{
+	std::string _saveDIR;
+	std::string _saveFile;
+	switch (_Type)
+	{
+	case 1:
+		_saveDIR = SCORES;
+		_saveFile = SCOREBOARD_CSV;
+		break;
+	case 2:
+		_saveDIR = DETAILED_RECORDS;
+		_saveFile = DETAILS_CSV;
+	}
+	std::fstream savePlayerInfo;
+	savePlayerInfo.open(_saveDIR + '/' + _saveFile, std::ios::app);
+	switch (_Type)
+	{
+	case 1:
+		whoToSign.SavePlayerToScoreboard(savePlayerInfo);
+		break;
+	case 2:
+		whoToSign.SavePlayerDetails(savePlayerInfo);
+		break;
+	}
+	savePlayerInfo.close();
+
+}
+
+// Loading scores, details and Psets (Public)
+
+void GameState::LoadScoreboards()
+{
+	std::string _DIR = SCORES;
+	std::string _fileName = SCOREBOARD_CSV;
+	std::ifstream ScoreboardFile;
+	std::string strLine;
+	char cDelimeter = ',';
+	ScoreboardFile.open(_DIR + '/' + _fileName);
+	if (!ScoreboardFile.is_open()) { std::cout << "No such file!\n"; return; }
+	while (std::getline(ScoreboardFile, strLine))
+	{
+		if (strLine == "ID,Name,Points") continue;
+		int nCell = 1;
+		std::stringstream ssRow(strLine);
+		std::string rawData;
+		// Constructor tmp value collectors
+		int* tmpId = new int;
+		std::string* tmpUserName = new std::string;
+		double* tmpPoints = new double;
+		while (std::getline(ssRow, rawData, cDelimeter))
+		{
+			switch (nCell)
+			{
+			case 1: *tmpId = std::stoi(rawData); break;
+			case 2: *tmpUserName = rawData; break;
+			case 3: *tmpPoints = std::stod(rawData); break;
+			}
+			if (nCell == 3)
+			{
+				Player* tmpP = new Player(*tmpId, *tmpUserName, *tmpPoints);
+				tmpP->ShowPlayerScoreboard();
+				delete tmpP;
+				delete tmpId; delete tmpUserName; delete tmpPoints;
+				nCell = 1;
+			}
+			else nCell++;
+		}
+	}
+	ScoreboardFile.close();
 }
 
 void GameState::SearchForPlayerPset(Player& PSearchFor)
@@ -284,6 +388,12 @@ void GameState::SearchForPlayerPset(Player& PSearchFor)
 	loadDetails.close();
 }
 
+Player GameState::returnPlayer(int id)
+{
+	std::map<int, Player> tmpMap = LoadDetails();
+	return tmpMap[id];
+}
+
 void GameState::LookAndDisplayPlayerDetails(std::map<int, Player> mappedPlayers, int Id)
 {
 	auto getPlayerInfo = mappedPlayers.find(Id);
@@ -337,121 +447,14 @@ std::map<int,Player> GameState::LoadDetails()
 	return mapOut;
 }
 
-void GameState::LoadScoreboards()
+//Display functions (Public)
+
+void GameState::displayPset(Player PDisp)
 {
-	std::string _DIR = SCORES;
-	std::string _fileName = SCOREBOARD_CSV;
-	std::ifstream ScoreboardFile;
-	std::string strLine;
-	char cDelimeter = ',';
-	ScoreboardFile.open(_DIR + '/' + _fileName);
-	if (!ScoreboardFile.is_open()) { std::cout << "No such file!\n"; return; }
-	while (std::getline(ScoreboardFile, strLine))
-	{
-		if (strLine == "ID,Name,Points") continue;
-		int nCell = 1;
-		std::stringstream ssRow(strLine);
-		std::string rawData;
-		// Constructor tmp value collectors
-		int* tmpId = new int;
-		std::string* tmpUserName = new std::string;
-		double* tmpPoints = new double;
-		while (std::getline(ssRow, rawData, cDelimeter))
-		{
-			switch (nCell)
-			{
-			case 1: *tmpId = std::stoi(rawData); break;
-			case 2: *tmpUserName = rawData; break;
-			case 3: *tmpPoints = std::stod(rawData); break;
-			}
-			if (nCell == 3)
-			{
-				Player* tmpP = new Player(*tmpId, *tmpUserName, *tmpPoints);
-				tmpP->ShowPlayerScoreboard();
-				delete tmpP;
-				delete tmpId; delete tmpUserName; delete tmpPoints;
-				nCell = 1;
-			}
-			else nCell++;
-		}
-	}
-	ScoreboardFile.close();
+	PDisp.DisplayProblems();
 }
 
-// Make the game
-
-void GameState::initializeGame()
-{
-	Player* MathPlayer = new Player(this->InitialBootUp);
-	GetDifficultyLevel();
-	GetGameAmmount();
-	for (int i = 1; i <= this->GameAmmount; i++)
-	{
-		Problem* Prob = new Problem(this->GameDifficulty, i);
-		if (Prob->IsAnsGood()) { MathPlayer->AddPoint(Prob->GiveProblemPointWeight()); }
-		MathPlayer->AssignProblem(*Prob);
-		delete Prob;
-	}
-	system("cls");
-	gameSummary(*MathPlayer);
-	system("cls");
-	system("Pause");
-	MathPlayer->DisplayProblems();
-	saveProblem(*MathPlayer);
-	savePlayerStats(*MathPlayer, 1);
-	savePlayerStats(*MathPlayer, 2);
-	if (GameState::addToHighScores(*MathPlayer))
-		GameState::addPlayerToHighScores(*MathPlayer, GameState::loadPlayersHighscores());
-	std::cout << "saved!\n";
-	system("Pause");
-	delete MathPlayer;
-}
-
-void GameState::saveProblem(Player whoPlayed)
-{
-	std::ofstream SaveTxt;
-	std::string _saveDIR = PROBLEM_SET;
-	_saveDIR += '/' + std::to_string(whoPlayed.givePlayerId()) + ".txt";
-	SaveTxt.open(_saveDIR);
-	whoPlayed.SavePlayerProgress(SaveTxt);
-	SaveTxt.close();
-}
-void GameState::savePlayerStats(Player whoToSign, int _Type)
-{
-	std::string _saveDIR;
-	std::string _saveFile;
-	switch (_Type)
-	{
-	case 1:
-		_saveDIR = SCORES;
-		_saveFile = SCOREBOARD_CSV;
-		break;
-	case 2:
-		_saveDIR = DETAILED_RECORDS;
-		_saveFile = DETAILS_CSV;
-	}
-	std::fstream savePlayerInfo;
-	savePlayerInfo.open(_saveDIR + '/' + _saveFile, std::ios::app);
-	switch (_Type)
-	{
-	case 1:
-		whoToSign.SavePlayerToScoreboard(savePlayerInfo);
-		break;
-	case 2:
-		whoToSign.SavePlayerDetails(savePlayerInfo);
-		break;
-	}
-	savePlayerInfo.close();
-
-}
-
-void GameState::gameSummary(Player whoPlayed)
-{
-	std::cout << "The game is over!\n";
-	std::cout << "You managed to earn " << whoPlayed.GiveFinalScores() << " points" << std::endl;
-	system("Pause");
-}
-// Set up game information
+// Get values (Public)
 // Difficulty
 void GameState::GetDifficultyLevel() 
 {
@@ -512,14 +515,24 @@ void GameState::GetGameAmmount()
 	this->GameAmmount = std::stoi(tmpValHolder);
 	tmpValHolder.clear();
 }
+// Initial boot up functions (Public)
 
 void GameState::Setup()
 {
 	checkEssentialDirectories();
 }
 
+// Actual gameplay (Public)
+
 GameState::GameState()
 {
 	GameDifficulty = 1; // Initial Value
 	initializeGame();
 }
+
+
+
+
+
+
+
