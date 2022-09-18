@@ -63,8 +63,6 @@ Menu::Menu()
 		checkEssentialFiles();
 	}
 	setInitialDiff();
-	
-	system("Pause");
 	system("cls");
 }
 void Menu::setInitialDiff()
