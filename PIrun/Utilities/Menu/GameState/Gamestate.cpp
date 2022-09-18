@@ -4,6 +4,143 @@ struct stat info;
 
 bool GameState::InitialBootUp;
 
+bool GameState::addToHighScores(Player checkPlayer)
+{
+	std::map<int, Player> mappedHighscores = GameState::loadPlayersHighscores();
+	if (mappedHighscores.size() < 10)
+		return true;
+	return checkPlayer.GiveFinalScores() > GameState::highestScore(mappedHighscores);
+}
+
+bool GameState::comparePlayers(std::pair<int, Player> a, std::pair<int, Player> b)
+{
+	return a < b;
+}
+
+void GameState::addPlayerToHighScores(Player P1, std::map<int, Player> mappedHighscores)
+{
+	int nPosition = 1;
+	bool bIsPositionLast = false;
+	Player* PrevPosition = new Player;
+	if (mappedHighscores.size() < 10)
+	{
+		for (auto i = mappedHighscores.begin(); i != mappedHighscores.end(); i++)
+		{
+			if (nPosition == mappedHighscores.size())
+				mappedHighscores.insert(std::make_pair(nPosition, P1));
+			if (nPosition == 1)
+			{
+				if (!(P1 < i->second))
+					i->second = P1;
+			}
+			else
+			{
+				if (!(P1 < i->second))
+				{
+					if (P1 < *PrevPosition)
+						i->second = P1;
+				}
+			}
+			nPosition++;
+			*PrevPosition = i->second;
+		}
+	}
+	else
+	{
+		for (auto i = mappedHighscores.begin(); i != mappedHighscores.end(); i++)
+		{
+			if (nPosition == 1)
+			{
+				if (!(P1 < i->second))
+					i->second = P1;
+			}
+			else
+			{
+				if (!(P1 < i->second))
+				{
+					if (P1 < *PrevPosition)
+						i->second = P1;
+				}
+			}
+			nPosition++;
+			*PrevPosition = i->second;
+		}
+	}
+	delete PrevPosition;
+	saveNewHighscores(mappedHighscores);
+}
+
+void GameState::saveNewHighscores(std::map<int, Player> newMappedHighscores)
+{
+	std::string _DIR = SCORES;
+	std::string _fileName = HIGHSCORES_CSV;
+	std::ofstream highscoresFile;
+	highscoresFile.open(_DIR + '/' + _fileName);
+	if (!highscoresFile.is_open()) { std::cout << "No such file!\n"; return; }
+	highscoresFile << "Place,Name,ID,Points" << std::endl;
+	for (auto& i : newMappedHighscores)
+	{
+		highscoresFile << i.first << ',';
+		i.second.SavePlayerToHighscores(highscoresFile);
+	}
+}
+
+double GameState::highestScore(std::map<int, Player>& checkHighscores)
+{
+	return checkHighscores[1].GiveFinalScores();
+}
+
+std::map<int, Player> GameState::loadPlayersHighscores()
+{
+	std::map <int, Player> mapOut;
+	std::string _DIR = SCORES;
+	std::string _fileName = HIGHSCORES_CSV;
+	std::ifstream highscoresLoad;
+	std::string strLine;
+	char cDelimeter = ',';
+	highscoresLoad.open(_DIR + "/" + _fileName);
+	if (!highscoresLoad.is_open()) { std::cout << "No such file!\n"; return mapOut; }
+	while (std::getline(highscoresLoad, strLine))
+	{
+		if (strLine == "Place,Name,ID,Points") continue;
+		int nCell = 1;
+		int *nPlace = new int;
+		std::string rawData;
+		// Constructor comp.
+		std::string* tmpUsername = new std::string;
+		int* tmpId = new int; double* tmpPoints = new double;
+		// Get those values
+		std::stringstream ssRow(strLine);
+		while (std::getline(ssRow, rawData, cDelimeter))
+		{
+			switch (nCell)
+			{
+			case 1:
+				*nPlace = std::stoi(rawData);
+				break;
+			case 2:
+				*tmpUsername = rawData;
+				break;
+			case 3:
+				*tmpId = std::stoi(rawData);
+				break;
+			case 4:
+				*tmpPoints = std::stod(rawData);
+				break;
+			}
+			if (nCell == 4)
+			{
+				Player* tmpPlayer = new Player(*tmpId, *tmpUsername, *tmpPoints);
+				mapOut.insert(std::make_pair(*nPlace, *tmpPlayer));
+				delete tmpPlayer;
+				delete nPlace; delete tmpUsername; delete tmpId; delete tmpPoints;
+			}
+			else nCell++;
+		}
+	}
+	return mapOut;
+}
+
 // Creates directory
 void GameState::makeDir(int fileType)
 {
@@ -260,6 +397,8 @@ void GameState::initializeGame()
 	std::cout << "Saving game files\n";
 	savePlayerStats(*MathPlayer, 1);
 	savePlayerStats(*MathPlayer, 2);
+	if (GameState::addToHighScores(*MathPlayer))
+		GameState::addPlayerToHighScores(*MathPlayer, GameState::loadPlayersHighscores());
 	std::cout << "saved!\n";
 	system("Pause");
 	delete MathPlayer;

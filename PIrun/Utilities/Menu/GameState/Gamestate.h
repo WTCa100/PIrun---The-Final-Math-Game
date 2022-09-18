@@ -12,6 +12,12 @@
 class GameState
 {
 private:
+	static bool addToHighScores(Player checkPlayer);
+	static bool comparePlayers(std::pair<int, Player> a, std::pair<int, Player> b);
+	static void addPlayerToHighScores(Player P1, std::map<int, Player> mappedHighscores);
+	static void saveNewHighscores(std::map<int, Player> newMappedHighscores);
+	static std::map<int, Player> loadPlayersHighscores();
+	static double highestScore(std::map<int, Player>& checkHighscores);
 	static void makeDir(int fileType);
 	static void checkEssentialDirectories();
 	static void checkDir(std::string _FILENAME);
