@@ -29,7 +29,9 @@ bool Validate::isInputNumber(std::string& strSample)
 	{
 		commaPos = strSample.find('.');
 		if (commaPos != std::string::npos)
+		{
 			bHasComma = true;
+		}
 	}
 	else
 	{
