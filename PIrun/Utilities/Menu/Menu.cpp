@@ -103,14 +103,14 @@ void Menu::getUserInput(int &actType)
 /*The following methods are uset do validate wether or not essential files exists*/
 void Menu::checkEssentialFiles()
 {
-	checkScores(HIGHSCORES_TXT);
+	checkScores(HIGHSCORES_CSV);
 	checkScores(SCOREBOARD_CSV);
 	checkScores(DETAILS_CSV, DETAILED_RECORDS);
 }
 
 void Menu::makeInitialFiles()
 {
-	makeFile(SCORES, HIGHSCORES_TXT);
+	makeFile(SCORES, HIGHSCORES_CSV);
 	makeFile(SCORES, SCOREBOARD_CSV);
 	makeFile(DETAILED_RECORDS, DETAILS_CSV);
 }
@@ -139,13 +139,19 @@ void Menu::makeFile(std::string _DIRpath, std::string strFileName)
 	filePlace.open(_path);
 	if (strFileName == SCOREBOARD_CSV)
 	{
-		filePlace << "ID," << "Name," << "Points\n";
+		filePlace << "ID,Name,Points\n";
 		filePlace.close();
 		return;
 	}
 	if (strFileName == DETAILS_CSV)
 	{
 		filePlace << "ID,Name,Number_of_Problems,Problems_Solved_Good,Points" << std::endl;
+		filePlace.close();
+		return;
+	}
+	if (strFileName == HIGHSCORES_CSV)
+	{
+		filePlace << "Place,Name,ID,Points" << std::endl;
 		filePlace.close();
 		return;
 	}
