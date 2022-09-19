@@ -3,7 +3,7 @@
 
 bool Validate::isYesNoValid(std::string strSample)
 {
-	return std::toupper(strSample[0]) == 'Y' || std::toupper(strSample[0] == 'N');
+	return std::toupper(strSample[0]) == 'Y' || std::toupper(strSample[0]) == 'N';
 }
 
 bool Validate::isEntryEmpty(std::string strSample)
