@@ -24,13 +24,14 @@ private:
 	int getHighestId();
 	void getInitialUserName(); // Constructor - get player nickname info
 public:
-	void SavePlayerToHighscores(std::ofstream& filePtr);
 	void ShowPlayerDetails();
 	void ShowPlayerScoreboard();
+	void ShowPlayerHighscores();
 	double GiveFinalScores(); // Only use this method at the end of gameplay
 	void SavePlayerDetails(std::fstream& filePtr);
 	void SavePlayerProgress(std::ofstream &filePtr);
 	void SavePlayerToScoreboard(std::fstream& filePtr); // Todo save player to scoreboard.csv
+	void SavePlayerToHighscores(std::ofstream& filePtr);
 	int givePlayerId();
 	void DisplayProblems(); // Debug
 	void AssignProblem(Problem currentProblem);

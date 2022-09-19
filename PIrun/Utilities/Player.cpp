@@ -71,6 +71,11 @@ void Player::ShowPlayerScoreboard()
 	std::cout << nID << ": " << strUsername << " got " << dbPointsEarned << " points.\n";
 }
 
+void Player::ShowPlayerHighscores()
+{
+	std::cout << strUsername << "(" << nID << ")" << ": " << dbPointsEarned << " points.\n";
+}
+
 double Player::GiveFinalScores()
 {
 	return this->dbPointsEarned;
