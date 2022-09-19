@@ -215,6 +215,8 @@ void GameState::initializeGame()
 	gameSummary(*MathPlayer);
 	system("cls");
 	system("Pause");
+	system("cls");
+	std::cout << "HERE ask if Player wants to have his playthrough shown\n";
 	MathPlayer->DisplayProblems();
 	saveProblem(*MathPlayer);
 	savePlayerStats(*MathPlayer, 1);
