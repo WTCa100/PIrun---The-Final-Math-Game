@@ -104,7 +104,7 @@ void Problem::generateSelf()
 
 void Problem::problemSummary()
 {
-	std::cout << "Expecter problem answer was: " << dbExpected << std::endl;
+	std::cout << "Expected problem answer was: " << dbExpected << std::endl;
 	std::cout << "Player answered: " << dbActual;
 	if(bIsAnsGood)
 	{
@@ -154,9 +154,9 @@ Problem::Problem(int Difficulty, int _ID)
 	generateSelf();
 	std::cout << _ID << ": This problem has "<< dbPointWeight <<" points:\n";
 	if (this->cAct != '/')
-		std::cout << std::setprecision(2) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << dbExpected << std::endl;
+		std::cout << std::setprecision(2) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << std::endl;
 	else
-		std::cout << std::setprecision(6) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << dbExpected << std::endl;
+		std::cout << std::setprecision(6) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << std::endl;
 	dbActual = GetUserInput();
 	bIsAnsGood = wasAnswerGood(this->cAct);
 	problemSummary();
