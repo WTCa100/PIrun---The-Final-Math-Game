@@ -37,12 +37,15 @@ void Menu::mainDisplay()
 				std::cout << "No such action action found\n";
 				break;
 			case 1:
+				system("cls");
 				newGame();
 				break;
 			case 2:
+				system("cls");
 				scoreboardSectionMenu();
 				break;
 			case 3:
+				system("cls");
 				showAboutMeSection();
 			break;
 			case 4:
@@ -193,53 +196,48 @@ void Menu::showProblemList(int checkID)
 
 void Menu::showPlayerDetail(int checkID)
 {
-	GameState::LookAndDisplayPlayerDetails(GameState::LoadDetails(), checkID);
+	bool bWasPlayerFound = GameState::LookAndDisplayPlayerDetails(GameState::LoadDetails(), checkID);
 	char nextAction;
 	std::string tmpValHolder;
-	do
+	if (bWasPlayerFound)
 	{
-		std::cout << "Would you like to see his list of problems? [y/n]\n";
-		std::getline(std::cin, tmpValHolder);
-		if (!Validate::isYesNoValid(tmpValHolder)) std::cout << "Please enter valid option\n" << std::endl;
-	} while (!Validate::isYesNoValid(tmpValHolder));
-	nextAction = std::toupper(tmpValHolder[0]);
-	tmpValHolder.clear();
-	if (nextAction == 'Y')
-		showProblemList(checkID);
+		do
+		{
+			std::cout << "Would you like to see his list of problems? [y/n]\n";
+			std::getline(std::cin, tmpValHolder);
+			if (!Validate::isYesNoValid(tmpValHolder)) std::cout << "Please enter valid option\n" << std::endl;
+		} while (!Validate::isYesNoValid(tmpValHolder));
+		nextAction = std::toupper(tmpValHolder[0]);
+		tmpValHolder.clear();
+		if (nextAction == 'Y')
+			showProblemList(checkID);
+	}
 	return;
 }
 
 void Menu::scoreboardSectionMenu()
 {
-	showScoreboard();
-	bool bIsInputCorrect = false;
 	std::string strTmpDataHolder;
 	do
 	{
+		showScoreboard();
 		std::cout << "If you want to see detailed player record input player ID\n";
 		std::cout << "If you want to see highscores type \"Highscores\" or simply \"h\"\n";
 		std::cout << "If you want to go back to main menu type \"Exit\" or simply press enter\n";
 		std::getline(std::cin, strTmpDataHolder);
-		if (strTmpDataHolder.empty() || Validate::MakeUpper(strTmpDataHolder) == "EXIT")
-			bIsInputCorrect = true;
+		if (Validate::isInputNumber(strTmpDataHolder))
+		{
+			showPlayerDetail(std::stoi(strTmpDataHolder));
+		}
 		else
 		{
-			if (Validate::isInputNumber(strTmpDataHolder))
+			if (strTmpDataHolder == "HIGHSCORES" || std::toupper(strTmpDataHolder[0]) == 'H')
 			{
-				showPlayerDetail(std::stoi(strTmpDataHolder));
-				bIsInputCorrect = true;
+				showHighScores();
 			}
-			else
-			{
-				if (strTmpDataHolder == "HIGHSCORES" || std::toupper(strTmpDataHolder[0]) == 'H')
-				{
-					showHighScores();
-					bIsInputCorrect = true;
-				}
-				else std::cout << "Enter a valid option\n";
-			}
+			else std::cout << "Enter a valid option\n";
 		}
-	} while (!bIsInputCorrect);
+	} while (!(strTmpDataHolder.empty() || Validate::MakeUpper(strTmpDataHolder) == "EXIT"));
 }
 
 void Menu::showAboutMeSection()
@@ -250,11 +248,10 @@ void Menu::showAboutMeSection()
 void Menu::showScoreboard()
 {
 	std::cout << "Format: ID : User name got (point ammount) points.\n";
-	GameState::LoadScoreboards();
+	GameState::displayScoreboard();
 }
 
 void Menu::showHighScores()
 {
-	//TODO update this
-	std::cout << "Highscores section\n";
+	GameState::displayHighscores();
 }
