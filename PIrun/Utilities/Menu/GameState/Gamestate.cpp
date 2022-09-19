@@ -399,11 +399,12 @@ Player GameState::returnPlayer(int id)
 	return tmpMap[id];
 }
 
-void GameState::LookAndDisplayPlayerDetails(std::map<int, Player> mappedPlayers, int Id)
+bool GameState::LookAndDisplayPlayerDetails(std::map<int, Player> mappedPlayers, int Id)
 {
 	auto getPlayerInfo = mappedPlayers.find(Id);
-	if (getPlayerInfo == mappedPlayers.end()) { std::cout << "No such player found!\n"; return; }
+	if (getPlayerInfo == mappedPlayers.end()) { std::cout << "No such player found!\n"; return false; }
 	mappedPlayers[Id].ShowPlayerDetails();
+	return true;
 }
 
 std::map<int,Player> GameState::LoadDetails()

@@ -37,7 +37,7 @@ public:
 	static void LoadScoreboards();
 	static void SearchForPlayerPset(Player& PSearchFor);
 	static Player returnPlayer(int id);
-	static void LookAndDisplayPlayerDetails(std::map<int, Player> mappedPlayers, int Id);
+	static bool LookAndDisplayPlayerDetails(std::map<int, Player> mappedPlayers, int Id);
 	static std::map<int,Player> LoadDetails();
 	// Display functions
 	static void displayPset(Player PDisp);
