@@ -4,6 +4,7 @@ struct stat info; // checking DIR
 
 bool GameState::InitialBootUp; // Initialize the static value
 
+
 // Loading scores
 // Makes a vector copy of map
 std::vector<Player> GameState::populateVectorWithHighscores(std::map<int, Player> getFrom)
@@ -213,7 +214,6 @@ void GameState::initializeGame()
 	}
 	system("cls");
 	gameSummary(*MathPlayer);
-	system("cls");
 	system("Pause");
 	system("cls");
 	std::cout << "HERE ask if Player wants to have his playthrough shown\n";
@@ -455,9 +455,41 @@ std::map<int,Player> GameState::LoadDetails()
 
 //Display functions (Public)
 
+void GameState::displayScoreboard()
+{
+	std::map<int, Player> mappedScoreboard = GameState::LoadScoreboards();
+	if (mappedScoreboard.empty()) { std::cout << "Scoreboards are empty!\n"; return; }
+	int nEntry = 1;
+	int nPage = 1;
+	for (auto Entry = mappedScoreboard.begin(); Entry != mappedScoreboard.end(); Entry ++)
+	{
+		Entry->second.ShowPlayerScoreboard();
+		nEntry++;
+		if (nEntry == 50) 
+		{ 
+			std::cout << "End of page " << nPage << "\n";
+			system("Pause");
+			system("cls");
+			nPage++, nEntry = 1; 
+		}
+		if (Entry->first == mappedScoreboard.rbegin()->first)
+		{
+			std::cout << "End of scoreboards.\n";
+		}
+	}
+}
+
 void GameState::displayPset(Player PDisp)
 {
 	PDisp.DisplayProblems();
+}
+
+void GameState::displayHighscores()
+{
+	std::map <int, Player> mapHighscores = GameState::loadPlayersHighscores();
+	if (mapHighscores.empty()) { std::cout << "Highscores are empty!\n"; return; }
+	for (auto& it : mapHighscores)
+		it.second.ShowPlayerScoreboard();
 }
 
 // Get values (Public)

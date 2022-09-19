@@ -34,13 +34,14 @@ private:
 	static void savePlayerStats(Player whoToSign, int _Type);
 public:
 	// Loading scores, details and Psets
-	static void LoadScoreboards();
 	static void SearchForPlayerPset(Player& PSearchFor);
 	static Player returnPlayer(int id);
 	static bool LookAndDisplayPlayerDetails(std::map<int, Player> mappedPlayers, int Id);
 	static std::map<int,Player> LoadDetails();
 	// Display functions
+	static void displayScoreboard();
 	static void displayPset(Player PDisp);
+	static void displayHighscores();
 	// Get values
 	int GameDifficulty, GameAmmount;
 	void GetDifficultyLevel();
