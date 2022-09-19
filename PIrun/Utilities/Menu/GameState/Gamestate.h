@@ -14,7 +14,7 @@ class GameState
 {
 private:
 	// Loading scores
-	// TODO: Load highscores into the memory.
+	static std::map<int,Player> LoadScoreboards();
 	static std::vector<Player> populateVectorWithHighscores(std::map<int, Player> getFrom);
 	static bool addToHighScores(Player checkPlayer);
 	static void addPlayerToHighScores(Player P1, std::map<int, Player> mappedHighscores);

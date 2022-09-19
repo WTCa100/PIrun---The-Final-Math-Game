@@ -293,15 +293,17 @@ void GameState::savePlayerStats(Player whoToSign, int _Type)
 
 // Loading scores, details and Psets (Public)
 
-void GameState::LoadScoreboards()
+std::map<int, Player> GameState::LoadScoreboards()
 {
+	std::map<int, Player> mapOut;
+	mapOut.clear();
 	std::string _DIR = SCORES;
 	std::string _fileName = SCOREBOARD_CSV;
 	std::ifstream ScoreboardFile;
 	std::string strLine;
 	char cDelimeter = ',';
 	ScoreboardFile.open(_DIR + '/' + _fileName);
-	if (!ScoreboardFile.is_open()) { std::cout << "No such file!\n"; return; }
+	if (!ScoreboardFile.is_open()) { std::cout << "No such file!\n"; return mapOut; }
 	while (std::getline(ScoreboardFile, strLine))
 	{
 		if (strLine == "ID,Name,Points") continue;
@@ -323,7 +325,7 @@ void GameState::LoadScoreboards()
 			if (nCell == 3)
 			{
 				Player* tmpP = new Player(*tmpId, *tmpUserName, *tmpPoints);
-				tmpP->ShowPlayerScoreboard();
+				mapOut.insert(std::make_pair(tmpP->givePlayerId(), *tmpP));
 				delete tmpP;
 				delete tmpId; delete tmpUserName; delete tmpPoints;
 				nCell = 1;
@@ -332,6 +334,7 @@ void GameState::LoadScoreboards()
 		}
 	}
 	ScoreboardFile.close();
+	return mapOut;
 }
 
 void GameState::SearchForPlayerPset(Player& PSearchFor)
