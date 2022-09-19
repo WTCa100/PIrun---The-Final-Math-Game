@@ -144,7 +144,7 @@ Player::Player(bool isInitial)
 	this->isInitialLaunch = isInitial;
 	getLatestId();
 	getInitialUserName();
-	std::cout << "Hello " << this->strUsername << "!\n Your id is: " << this->nID << "\n";
+	std::cout << "Hello " << this->strUsername << "!\nYour id is: " << this->nID << "\n";
 }
 
 Player::Player(int id, std::string un, double points)
