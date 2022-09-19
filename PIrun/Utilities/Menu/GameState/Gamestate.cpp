@@ -211,18 +211,16 @@ void GameState::initializeGame()
 		MathPlayer->AssignProblem(*Prob);
 		delete Prob;
 	}
-	system("cls");
-	gameSummary(*MathPlayer);
-	system("Pause");
-	system("cls");
-	std::cout << "HERE ask if Player wants to have his playthrough shown\n";
-	MathPlayer->DisplayProblems();
 	saveProblem(*MathPlayer);
 	savePlayerStats(*MathPlayer, 1);
 	savePlayerStats(*MathPlayer, 2);
 	if (GameState::addToHighScores(*MathPlayer))
 		GameState::addPlayerToHighScores(*MathPlayer, GameState::loadPlayersHighscores());
-	std::cout << "saved!\n";
+	system("cls");
+	gameSummary(*MathPlayer);
+	system("cls");
+	std::cout << "HERE ask if Player wants to have his playthrough shown\n";
+	MathPlayer->DisplayProblems();
 	system("Pause");
 	delete MathPlayer;
 }
