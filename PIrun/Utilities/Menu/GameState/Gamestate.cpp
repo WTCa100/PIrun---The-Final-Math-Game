@@ -4,7 +4,6 @@ struct stat info; // checking DIR
 
 bool GameState::InitialBootUp; // Initialize the static value
 
-
 // Loading scores
 // Makes a vector copy of map
 std::vector<Player> GameState::populateVectorWithHighscores(std::map<int, Player> getFrom)
