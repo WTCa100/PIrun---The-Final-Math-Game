@@ -57,6 +57,10 @@ void Player::SavePlayerToHighscores(std::ofstream& filePtr)
 }
 
 void Player::setAmmount(int nNewAmmount)
+{
+	this->nGameAmmount = nNewAmmount;
+}
+
 void Player::ShowPlayerDetails()
 {
 	std::cout << "ID: " << nID << std::endl;
