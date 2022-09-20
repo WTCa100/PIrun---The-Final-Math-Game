@@ -35,6 +35,7 @@ void Menu::mainDisplay()
 	do
 	{
 		std::cout << "Welcome to PIrun - the final math game!\t\tGame created by John Bielawa - (WTCa100/Pepga315)\n";
+		std::cout << "Version: 0.1.2v\n";
 		std::cout << "Main Menu:\n";
 		std::cout << "1. New game\n";
 		std::cout << "2. Scoreboard\n";
