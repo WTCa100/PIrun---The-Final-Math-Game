@@ -26,6 +26,7 @@ private:
 	static void checkDir(std::string _FILENAME);
 	static bool lookForDir(std::string _DIRpath);
 	// Actual gameplay
+	bool askToSaveGame();
 	void initializeGame();
 	void gameSummary(Player whoPlayed);
 	// Saving scores

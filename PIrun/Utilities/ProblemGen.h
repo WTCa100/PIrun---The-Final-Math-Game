@@ -22,11 +22,12 @@ private:
 	double GenerateNum(int Dif);
 	char GenerateAction();
 	double GenerateSolution();
-	double GetUserInput();
+	std::string GetUserInput();
 	bool wasAnswerGood(char cActionDone);
 	void generateSelf();
 	void problemSummary();
 public:
+	bool DisplayProblem();
 	bool IsAnsGood();
 	double GiveProblemPointWeight();
 	void SaveProblem(std::ofstream &filePtr);

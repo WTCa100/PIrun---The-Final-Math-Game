@@ -24,6 +24,7 @@ private:
 	int getHighestId();
 	void getInitialUserName(); // Constructor - get player nickname info
 public:
+	void setAmmount(int nNewAmmount);
 	void ShowPlayerDetails();
 	void ShowPlayerScoreboard();
 	void ShowPlayerHighscores();

@@ -20,7 +20,7 @@ bool GameState::addToHighScores(Player checkPlayer)
 	std::map<int, Player> mappedHighscores = GameState::loadPlayersHighscores();
 	if (mappedHighscores.size() < 10) // If there are less than 10 entries in highscores then it always returns true
 		return true;
-	return checkPlayer.GiveFinalScores() > GameState::lowestScore(mappedHighscores);
+	return checkPlayer.GiveFinalScores() >= GameState::lowestScore(mappedHighscores);
 }
 // Adds Player to highscores
 void GameState::addPlayerToHighScores(Player P1, std::map<int, Player> mappedHighscores)
@@ -198,6 +198,21 @@ bool GameState::lookForDir(std::string _DIRpath)
 
 // Actual Gameplay 
 
+bool GameState::askToSaveGame()
+{
+	std::string strTmpValHolder;
+	do
+	{
+		std::cout << "Ok do you want to save your progress? [y/n]\n";
+		std::getline(std::cin, strTmpValHolder);
+		if (!Validate::isYesNoValid(strTmpValHolder))
+			std::cout << "Enter a valid option!\n";
+
+	} while (!Validate::isYesNoValid(strTmpValHolder));
+	if (strTmpValHolder[0] == 'N') { return false; }
+	return true;
+}
+
 void GameState::initializeGame()
 {
 	Player* MathPlayer = new Player(this->InitialBootUp);
@@ -205,18 +220,38 @@ void GameState::initializeGame()
 	GetDifficultyLevel();
 	GetGameAmmount();
 	system("cls");
-	for (int i = 1; i <= this->GameAmmount; i++)
+	int nGamePlayed = 1;
+	for (int i = 1; i <= this->GameAmmount; i++, nGamePlayed++)
 	{
 		Problem* Prob = new Problem(this->GameDifficulty, i);
+		if (!Prob->DisplayProblem())
+		{
+			MathPlayer->setAmmount(i);
+			if(askToSaveGame())
+			{
+				saveProblem(*MathPlayer);
+				savePlayerStats(*MathPlayer, 1);
+				savePlayerStats(*MathPlayer, 2);
+				if (GameState::addToHighScores(*MathPlayer))
+					GameState::addPlayerToHighScores(*MathPlayer, GameState::loadPlayersHighscores());
+				delete Prob;
+				break;
+			}
+			delete Prob;
+			break;
+		}
 		if (Prob->IsAnsGood()) { MathPlayer->AddPoint(Prob->GiveProblemPointWeight()); }
 		MathPlayer->AssignProblem(*Prob);
 		delete Prob;
 	}
-	saveProblem(*MathPlayer);
-	savePlayerStats(*MathPlayer, 1);
-	savePlayerStats(*MathPlayer, 2);
-	if (GameState::addToHighScores(*MathPlayer))
-		GameState::addPlayerToHighScores(*MathPlayer, GameState::loadPlayersHighscores());
+	if (nGamePlayed == this->GameAmmount)
+	{
+		saveProblem(*MathPlayer);
+		savePlayerStats(*MathPlayer, 1);
+		savePlayerStats(*MathPlayer, 2);
+		if (GameState::addToHighScores(*MathPlayer))
+			GameState::addPlayerToHighScores(*MathPlayer, GameState::loadPlayersHighscores());
+	}
 	system("cls");
 	gameSummary(*MathPlayer);
 	system("cls");

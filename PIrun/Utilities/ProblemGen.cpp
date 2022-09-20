@@ -57,19 +57,19 @@ double Problem::GenerateSolution()
 	return 0.0f;
 }
 
-double Problem::GetUserInput()
+std::string Problem::GetUserInput()
 {
 	std::string strTmpValueHolder;
 	do
 	{
 		std::cout << "Answer: ";
 		std::getline(std::cin, strTmpValueHolder);
-		if (!Validate::isInputNumber(strTmpValueHolder))
+		if (!(Validate::isInputNumber(strTmpValueHolder) || Validate::MakeUpper(strTmpValueHolder) == "CANCEL"))
 		{
 			std::cout << "Plase enter a numeric value!\n";
 		}
-	} while (!Validate::isInputNumber(strTmpValueHolder));
-	return std::stod(strTmpValueHolder);
+	} while (!((Validate::isInputNumber(strTmpValueHolder) || Validate::MakeUpper(strTmpValueHolder) == "CANCEL")));
+	return strTmpValueHolder;
 }
 // There really is no better way (to my knowladge) on checking if a floating point (especially high precision double) is equal to another
 // The expression presented here comes from Bruce Dawnson and his lovely blog https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/
@@ -116,6 +116,25 @@ void Problem::problemSummary()
 
 
 
+
+bool Problem::DisplayProblem()
+{
+	std::cout << this->nProblemId << ": This problem has " << dbPointWeight << " points:\n";
+	if (this->cAct != '/')
+		std::cout << std::setprecision(2) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << std::endl;
+	else
+		std::cout << std::setprecision(2) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << std::endl;
+	std::string tmpAnsHolder = GetUserInput();
+	if (tmpAnsHolder == "CANCEL")
+	{
+		return false;
+	}
+	this->dbActual = std::stod(tmpAnsHolder);
+	bIsAnsGood = wasAnswerGood(this->cAct);
+	problemSummary();
+	return true;
+}
+
 bool Problem::IsAnsGood()
 {
 	return this->bIsAnsGood;
@@ -152,16 +171,6 @@ Problem::Problem(int Difficulty, int _ID)
 	this->nDiff = Difficulty;
 	this->nProblemId = _ID;
 	generateSelf();
-	std::cout << _ID << ": This problem has "<< dbPointWeight <<" points:\n";
-	if (this->cAct != '/')
-		std::cout << std::setprecision(2) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << std::endl;
-	else
-		std::cout << std::setprecision(6) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << std::endl;
-	dbActual = GetUserInput();
-	bIsAnsGood = wasAnswerGood(this->cAct);
-	problemSummary();
-	system("pause");
-	system("cls");
 }
 
 Problem::Problem(int nProbId, double dbPoints, double dbC1, char cAD, double dbC2, double dbSolutExp, double dbSolutActual, bool bWasGood)
