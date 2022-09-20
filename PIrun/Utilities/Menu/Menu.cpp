@@ -1,6 +1,17 @@
 #pragma once
 #include"Menu.h"
 
+// Value obtaining
+
+// Checking files
+
+// Display functions
+
+// Sub-menus
+
+// Value obtaining (public)
+
+// Dispay functions (public)
 int Menu::GetGameDiff()
 {
 	std::string strTmpHolder;
