@@ -19,7 +19,7 @@ private:
 	static bool addToHighScores(Player checkPlayer);
 	static void addPlayerToHighScores(Player P1, std::map<int, Player> mappedHighscores);
 	static std::map<int, Player> loadPlayersHighscores();
-	static double highestScore(std::map<int, Player>& checkHighscores);
+	static double lowestScore(std::map<int, Player>& checkHighscores);
 	// Checking Directories
 	static void makeDir(int fileType);
 	static void checkEssentialDirectories();

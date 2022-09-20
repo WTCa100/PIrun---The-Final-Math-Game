@@ -16,10 +16,11 @@ std::vector<Player> GameState::populateVectorWithHighscores(std::map<int, Player
 // Checks if Player instance is eligable to be in highscores 
 bool GameState::addToHighScores(Player checkPlayer)
 {
+	if (checkPlayer.GiveFinalScores() == 0) return false;
 	std::map<int, Player> mappedHighscores = GameState::loadPlayersHighscores();
 	if (mappedHighscores.size() < 10) // If there are less than 10 entries in highscores then it always returns true
 		return true;
-	return checkPlayer.GiveFinalScores() > GameState::highestScore(mappedHighscores);
+	return checkPlayer.GiveFinalScores() > GameState::lowestScore(mappedHighscores);
 }
 // Adds Player to highscores
 void GameState::addPlayerToHighScores(Player P1, std::map<int, Player> mappedHighscores)
@@ -32,15 +33,13 @@ void GameState::addPlayerToHighScores(Player P1, std::map<int, Player> mappedHig
 		mappedHighscores.clear(); // Remove values from mapped highscores
 		for (int i = 0; i < vecsHighscores.size(); i++)
 		{
-			if (i == vecsHighscores.size() - 1) { vecsHighscores.push_back(P1); break; } // Do the checking
+
+			if (i == 0) { if (vecsHighscores[i] < P1) { vecsHighscores.insert(vecsHighscores.begin(), P1); break; } }
 			else
 			{
-				if (i == 0) { if (vecsHighscores[i] < P1) { vecsHighscores.insert(vecsHighscores.begin(), P1); break; } }
-				else
-				{
-					if (P1 < vecsHighscores[i] && vecsHighscores[i - 1] < P1) { vecsHighscores.insert(vecsHighscores.begin() + i, P1); return; }
-				}
+				if (P1 < vecsHighscores[i] && vecsHighscores[i - 1] < P1) { vecsHighscores.insert(vecsHighscores.begin() + i, P1); return; }
 			}
+			if (i == vecsHighscores.size() - 1) { vecsHighscores.push_back(P1); break; } // Do the checking
 		}
 		if (vecsHighscores.empty()) // If it's empty push_back player value
 			vecsHighscores.push_back(P1);
@@ -129,9 +128,9 @@ std::map<int, Player> GameState::loadPlayersHighscores()
 	return mapOut;
 }
 // Returns the first player 
-double GameState::highestScore(std::map<int, Player>& checkHighscores)
+double GameState::lowestScore(std::map<int, Player>& checkHighscores)
 {
-	return checkHighscores[1].GiveFinalScores(); // Maps are ordered by their keys so it will always return scores of the first player
+	return checkHighscores.rbegin()->second.GiveFinalScores(); // Maps are ordered by their keys so it will always return scores of the first player
 }
 
 // Checing Directories
@@ -202,8 +201,10 @@ bool GameState::lookForDir(std::string _DIRpath)
 void GameState::initializeGame()
 {
 	Player* MathPlayer = new Player(this->InitialBootUp);
+	if (this->InitialBootUp) this->InitialBootUp = false;
 	GetDifficultyLevel();
 	GetGameAmmount();
+	system("cls");
 	for (int i = 1; i <= this->GameAmmount; i++)
 	{
 		Problem* Prob = new Problem(this->GameDifficulty, i);
@@ -222,6 +223,7 @@ void GameState::initializeGame()
 	std::cout << "HERE ask if Player wants to have his playthrough shown\n";
 	MathPlayer->DisplayProblems();
 	system("Pause");
+	system("cls");
 	delete MathPlayer;
 }
 
@@ -374,7 +376,7 @@ void GameState::SearchForPlayerPset(Player& PSearchFor)
 			*tmpActual = std::stod(strLine);
 			break;
 		case 8:
-			*tmpCor = std::stoi(strLine);
+			*tmpCor = std::stoi(strLine); // Value in this line will always be either 1 or 0
 			break;
 		}
 		if (nLine == 8)
@@ -486,7 +488,10 @@ void GameState::displayHighscores()
 	std::map <int, Player> mapHighscores = GameState::loadPlayersHighscores();
 	if (mapHighscores.empty()) { std::cout << "Highscores are empty!\n"; return; }
 	for (auto& it : mapHighscores)
-		it.second.ShowPlayerScoreboard();
+	{
+		std::cout << it.first << ": ";
+		it.second.ShowPlayerHighscores();
+	}
 }
 
 // Get values (Public)
