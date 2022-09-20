@@ -89,7 +89,6 @@ void Menu::getUserInput(int &actType)
 			actType = std::stoi(strTmpUserInput);
 			if (!Validate::isWithtinRange(actType, 4, 1))
 			{
-				std::cout << Validate::isWithtinRange(actType,1,4) << std::endl;
 				std::cout << "Please enter value within range!\n";
 			}
 			else
@@ -210,8 +209,12 @@ void Menu::showPlayerDetail(int checkID)
 		nextAction = std::toupper(tmpValHolder[0]);
 		tmpValHolder.clear();
 		if (nextAction == 'Y')
+		{
 			showProblemList(checkID);
+			system("pause");
+		}
 	}
+	else system("pause");
 	return;
 }
 
@@ -220,29 +223,55 @@ void Menu::scoreboardSectionMenu()
 	std::string strTmpDataHolder;
 	do
 	{
+		std::cout << "-=Scoreboards=-\n";
 		showScoreboard();
 		std::cout << "If you want to see detailed player record input player ID\n";
 		std::cout << "If you want to see highscores type \"Highscores\" or simply \"h\"\n";
 		std::cout << "If you want to go back to main menu type \"Exit\" or simply press enter\n";
 		std::getline(std::cin, strTmpDataHolder);
-		if (Validate::isInputNumber(strTmpDataHolder))
+		if (!(strTmpDataHolder.empty() || Validate::MakeUpper(strTmpDataHolder) == "EXIT"))
 		{
-			showPlayerDetail(std::stoi(strTmpDataHolder));
-		}
-		else
-		{
-			if (strTmpDataHolder == "HIGHSCORES" || std::toupper(strTmpDataHolder[0]) == 'H')
+			if (Validate::isInputNumber(strTmpDataHolder))
 			{
-				showHighScores();
+				showPlayerDetail(std::stoi(strTmpDataHolder));
+				system("cls");
 			}
-			else std::cout << "Enter a valid option\n";
+			else
+			{
+				if (strTmpDataHolder == "HIGHSCORES" || std::toupper(strTmpDataHolder[0]) == 'H')
+				{
+					system("cls");
+					std::cout << "-=HighScores=-\n";
+					showHighScores();
+					system("cls");
+				}
+				else { std::cout << "Enter a valid option\n"; system("pause"); system("cls"); };
+			}
 		}
 	} while (!(strTmpDataHolder.empty() || Validate::MakeUpper(strTmpDataHolder) == "EXIT"));
+	system("cls");
 }
 
 void Menu::showAboutMeSection()
 {
-	std::cout << "About the game\n";
+	std::cout << "3.14run or PiRun is a game based on my original idea from february 2022.\n";
+	std::cout << "This is was my very first attempt to make functional game or something that is game-like.\n";
+	std::cout << "The first version of PiRun was and still is called \"SimpleMathGame\" - it was the original name!\n";
+	std::cout << "Then there was SimpleMathGameV2 and SimpleMathGame-Rework and yet here we are at 3.14run\n";
+	std::cout << "The first version of the game was very simple hence the name. \nThe idea was that the program will generate random number from various ranges depending on choosen difficulty.\n";
+	std::cout << "The first version only did this, it didn't even save your scores.\n";
+	std::cout << "The second version was just like the first one but with classes and user-defined headers.\n";
+	std::cout << "Then the third version which was the \"LAST REWORK\" came and definetly wasn't the last rework!\n";
+	std::cout << "Why? Well simply it was bad and I didn't feel like it should be the very last thing I do to this game.\n";
+	std::cout << "The Third edition of the game included file saving, interactive scoreboards and more features \nsuch as using doubles and floats as user input (yes in previous versions you couldn't have non-devidable numbers!)\n";
+	std::cout << "But it was spaghetti codded (this is also kind of spahgetti but not as much), \nand some of the problem handling I made just aren't good enough for me anymore.\n";
+	std::cout << "THAT IS WHY i made 3.14run or PiRun, it is because I wanted to make something looking more professional and I think that I did it. \nUnlike the previous games, in this one I used every single thing I knew about programming in C++\n";
+	if (InitialBootUp)
+		std::cout << "Have fun playing the game newcomer!\n";
+	else
+		std::cout << "Anyway let's have some fun playing the game shall we?\n";
+	system("pause");
+	system("cls");
 }
 
 void Menu::showScoreboard()
@@ -254,4 +283,6 @@ void Menu::showScoreboard()
 void Menu::showHighScores()
 {
 	GameState::displayHighscores();
+	system("pause");
+	system("cls");
 }

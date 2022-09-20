@@ -9,7 +9,6 @@ int Player::getLatestId()
 	{
 		nID = getHighestId() + 1;
 	}
-	std::cout << nID << std::endl;
 	return 0;
 }
 
@@ -73,7 +72,7 @@ void Player::ShowPlayerScoreboard()
 
 void Player::ShowPlayerHighscores()
 {
-	std::cout << strUsername << "(" << nID << ")" << ": " << dbPointsEarned << " points.\n";
+	std::cout << strUsername << ": " << dbPointsEarned << " points.\t" << "(Player ID:" << nID << ")\n";
 }
 
 double Player::GiveFinalScores()
