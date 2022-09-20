@@ -56,6 +56,7 @@ void Player::SavePlayerToHighscores(std::ofstream& filePtr)
 	filePtr << this->strUsername << ',' << this->nID << ',' << this->dbPointsEarned << std::endl;
 }
 
+void Player::setAmmount(int nNewAmmount)
 void Player::ShowPlayerDetails()
 {
 	std::cout << "ID: " << nID << std::endl;
