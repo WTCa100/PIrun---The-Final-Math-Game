@@ -2,32 +2,8 @@
 // Generate a number depending on Difficulty
 double Problem::GenerateNum(int Dif)
 {
-	switch (Dif)
-	{
-	default:
-		std::cout << "Unknown error has occured\n";
-		break;
-	case 1:
 		return rand() % static_cast<long>(pow(10, Dif)) + 1;
-		break;		
-	case 2:
-		return rand() % static_cast<long>(pow(10, Dif)) + 1;
-		break;
-	case 3:
-		return rand() % static_cast<long>(pow(10, Dif)) + 1;
-		break;
-	case 4:
-		return rand() % static_cast<long>(pow(10, Dif)) + 1;
-		break;
-	case 5:
-		return rand() % static_cast<long>(pow(10, Dif)) + 1;
-		break;
-	case 6:
-		return rand() % static_cast<long>(pow(10, Dif)) + 1;
-		break;
 	}
-	return 0.0f;
-}
 // Generate only action char
 char Problem::GenerateAction()
 {
