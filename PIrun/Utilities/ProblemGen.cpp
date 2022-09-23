@@ -89,6 +89,7 @@ bool Problem::isNumPrime(int nNum)
 
 void Problem::GenerateComponents(int Dif)
 {
+	// If difficulty is easy or very easy (1, 2) then generate 
 	if (Dif <= 2)
 	{
 		switch (this->cAct)
@@ -100,28 +101,44 @@ void Problem::GenerateComponents(int Dif)
 		case '/':
 			do
 			{
-				this->dbComp1 = GenerateNum(this->nDiff + 1);
+				this->dbComp1 = GenerateNum(this->nDiff + 1); // dbComp1 cannot be a prime number
 			} while (isNumPrime(static_cast<long>(dbComp1)));
 			do
 			{
-				this->dbComp2 = GenerateNum(this->nDiff);
+				this->dbComp2 = GenerateNum(this->nDiff); // dbComp2 cannot be 1 and can only be a devidable by dbComp1 number
 			} while (static_cast<long>(this->dbComp1) % static_cast<long>(this->dbComp2) != 0 || this->dbComp2 == 1);
 		}
 	}
-	else if (Dif == 3)
+	else if (Dif == 3) // Medium difficulty offers a less complexity when it come to it's generation
 	{
-		std::cout << "Do stuff\n";
+		switch (this->cAct)
+		{
+		default: // dbComp1 don't need to be bigger than dbComp2 
+			this->dbComp1 = GenerateNum(this->nDiff);
+			this->dbComp2 = GenerateNum(this->nDiff); 
+			break;
+		case '/': // dbComp1 still cannot be a prime number
+			do
+			{
+				this->dbComp1 = GenerateNum(this->nDiff);
+			} while (isNumPrime(dbComp1));
+			do
+			{
+				this->dbComp2 = GenerateNum(this->nDiff);
+			} while (this->dbComp2 == 1 || this->dbComp2 == dbComp1); // dbComp2 now don't need to be a devidable component
+		}
 	}
-	else
+	else // Higher levels also includes floating points
 	{
-		std::cout << "Do even more stuff\n";
+		this->dbComp1 = GenerateNum(this->nDiff) + GenerateNum(this->nDiff - 2) / pow(10, this->nDiff - 2);
+		this->dbComp2 = GenerateNum(this->nDiff) + GenerateNum(this->nDiff - 2) / pow(10, this->nDiff - 2);
 	}
 }
 
 void Problem::generateSelf()
 {
 	cAct = GenerateAction();
-	cAct = '/';
+	cAct = '+';
 	dbComp1 = GenerateNum(this->nDiff);
 	dbComp2 = GenerateNum(this->nDiff);
 	GenerateComponents(this->nDiff);
