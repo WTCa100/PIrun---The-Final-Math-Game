@@ -195,14 +195,16 @@ void GameState::initializeGame()
 	GetGameAmmount();
 	system("cls");
 	int nGamePlayed = 0;
+	bool bIsEarlyClose = false;
 	for (int i = 1; i <= this->GameAmmount; i++, nGamePlayed++)
 	{
 		Problem* Prob = new Problem(this->GameDifficulty, i);
 		if (!Prob->DisplayProblem())
 		{
 			MathPlayer->setAmmount(i);
-			if(askToSaveGame())
+			if (askToSaveGame())
 			{
+				bIsEarlyClose = true;
 				saveProblem(*MathPlayer);
 				savePlayerStats(*MathPlayer, 1);
 				savePlayerStats(*MathPlayer, 2);
@@ -211,6 +213,8 @@ void GameState::initializeGame()
 				delete Prob;
 				break;
 			}
+			else
+				bIsEarlyClose = true;
 			delete Prob;
 			break;
 		}
@@ -219,7 +223,7 @@ void GameState::initializeGame()
 		system("Pause");
 		delete Prob;
 	}
-	if (nGamePlayed == this->GameAmmount)
+	if (nGamePlayed == this->GameAmmount && !bIsEarlyClose)
 	{
 		saveProblem(*MathPlayer);
 		savePlayerStats(*MathPlayer, 1);
