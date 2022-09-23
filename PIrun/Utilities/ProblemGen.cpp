@@ -94,8 +94,8 @@ void Problem::GenerateComponents(int Dif)
 	{
 		switch (this->cAct)
 		{
-		default:
-			this->dbComp1 = GenerateNum(this->nDiff);
+		default: // dbComp1 will always be bigger than the first one
+			this->dbComp1 = GenerateNum(this->nDiff+1);
 			this->dbComp2 = GenerateNum(this->nDiff);
 			break;
 		case '/':
@@ -160,15 +160,22 @@ void Problem::problemSummary()
 }
 
 
-
-
 bool Problem::DisplayProblem()
 {
 	std::cout << this->nProblemId << ": This problem has " << dbPointWeight << " points:\n";
 	if (this->cAct != '/')
+	{
+		if (this->nDiff >= 4)
+		{ // setprecision will only show the possible filled digits
+			std::cout << std::setprecision(nDiff - 2) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << std::endl;
+		}
+		else
+		{
 		std::cout << std::setprecision(2) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << std::endl;
+		}
+	}
 	else
-		std::cout << std::setprecision(2) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << std::endl;
+		std::cout << std::setprecision(6) << std::fixed << dbComp1 << " " << cAct << " " << dbComp2 << " = " << std::endl;
 	std::string tmpAnsHolder = GetUserInput();
 	if (tmpAnsHolder == "CANCEL")
 	{
