@@ -70,16 +70,17 @@ double Problem::GeneratePointWeight(char Act, int Dif)
 
 bool Problem::isNumPrime(int nNum)
 {
-	if (nNum == 0 || nNum == 1 || (nNum % 2 == 0 && nNum > 2)) return false;
+	if (nNum == 0 || nNum == 1 || nNum == 2) return true;
+	else if (nNum % 2 == 0 && nNum > 2) return false;
 	else
 	{
 		for (long i = 3; i <= static_cast<long>(std::sqrt(nNum)); i++)
 		{
 			if (nNum % i == 0)
-				return true;
+				return false;
 		}
 	}
-	return false;
+	return true;
 }
 
 void Problem::GenerateComponents(int Dif)
@@ -100,7 +101,7 @@ void Problem::GenerateComponents(int Dif)
 			do
 			{
 				this->dbComp2 = GenerateNum(this->nDiff);
-			} while (this->dbComp2 >= dbComp1 && this->dbComp2 != 1 && static_cast<long>(this->dbComp2) % static_cast<long>(this->dbComp1) != 0);
+			} while (static_cast<long>(this->dbComp1) % static_cast<long>(this->dbComp2) != 0 || this->dbComp2 == 1);
 		}
 	}
 	else if (Dif == 3)
@@ -109,7 +110,7 @@ void Problem::GenerateComponents(int Dif)
 	}
 	else
 	{
-
+		std::cout << "Do even more stuff\n";
 	}
 }
 
