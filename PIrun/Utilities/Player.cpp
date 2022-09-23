@@ -176,6 +176,11 @@ bool operator<(Player const& P1, Player const& P2)
 	return P1.dbPointsEarned < P2.dbPointsEarned;
 }
 
+bool operator<=(Player const& P1, Player const& P2)
+{
+	return P1.dbPointsEarned <= P2.dbPointsEarned;
+}
+
 bool operator==(Player const& P1, Player const& P2)
 {
 	return P1.nID == P2.nID;
