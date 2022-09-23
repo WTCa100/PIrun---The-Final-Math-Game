@@ -19,6 +19,8 @@ private:
 	double dbComp1, dbComp2;
 	double dbExpected, dbActual;
 	double GeneratePointWeight(char Act, int Dif);
+	bool isNumPrime(int nNum);
+	void GenerateComponents(int Dif);
 	double GenerateNum(int Dif);
 	char GenerateAction();
 	double GenerateSolution();

@@ -2,8 +2,8 @@
 // Generate a number depending on Difficulty
 double Problem::GenerateNum(int Dif)
 {
-		return rand() % static_cast<long>(pow(10, Dif)) + 1;
-	}
+	return rand() % static_cast<long>(pow(10, Dif)) + 1;
+}
 // Generate only action char
 char Problem::GenerateAction()
 {
@@ -68,11 +68,58 @@ double Problem::GeneratePointWeight(char Act, int Dif)
 	return (pow(Dif * 0.8, 2) + pow(Act * 0.2, 2)); // Might change the formula later
 }
 
+bool Problem::isNumPrime(int nNum)
+{
+	if (nNum == 0 || nNum == 1 || (nNum % 2 == 0 && nNum > 2)) return false;
+	else
+	{
+		for (long i = 3; i <= static_cast<long>(std::sqrt(nNum)); i++)
+		{
+			if (nNum % i == 0)
+				return true;
+		}
+	}
+	return false;
+}
+
+void Problem::GenerateComponents(int Dif)
+{
+	if (Dif <= 2)
+	{
+		switch (this->cAct)
+		{
+		default:
+			this->dbComp1 = GenerateNum(this->nDiff);
+			this->dbComp2 = GenerateNum(this->nDiff);
+			break;
+		case '/':
+			do
+			{
+				this->dbComp1 = GenerateNum(this->nDiff + 1);
+			} while (isNumPrime(static_cast<long>(dbComp1)));
+			do
+			{
+				this->dbComp2 = GenerateNum(this->nDiff);
+			} while (this->dbComp2 >= dbComp1 && this->dbComp2 != 1 && static_cast<long>(this->dbComp2) % static_cast<long>(this->dbComp1) != 0);
+		}
+	}
+	else if (Dif == 3)
+	{
+		std::cout << "Do stuff\n";
+	}
+	else
+	{
+
+	}
+}
+
 void Problem::generateSelf()
 {
+	cAct = GenerateAction();
+	cAct = '/';
 	dbComp1 = GenerateNum(this->nDiff);
 	dbComp2 = GenerateNum(this->nDiff);
-	cAct = GenerateAction();
+	GenerateComponents(this->nDiff);
 	dbPointWeight = GeneratePointWeight(this->cAct, this->nDiff);
 	dbExpected = GenerateSolution();
 
