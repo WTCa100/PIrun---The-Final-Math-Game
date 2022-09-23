@@ -66,7 +66,7 @@ void Player::ShowPlayerDetails()
 	std::cout << "ID: " << nID << std::endl;
 	std::cout << "Name: " << strUsername << std::endl;
 	std::cout << "Number of problems solved: " << nGameAmmount << " - " << nGoodGameAmmount <<" of games were correct\n";
-	std::cout << std::setprecision(2) << std::fixed << "Ratio: " << nGoodGameAmmount / nGameAmmount << std::endl;
+	std::cout << std::setprecision(2) << std::fixed << "Ratio: " << static_cast<double>(nGoodGameAmmount) / static_cast<double>(nGameAmmount) << std::endl;
 	std::cout << "Points collected " << dbPointsEarned << std::endl;
 }
 
