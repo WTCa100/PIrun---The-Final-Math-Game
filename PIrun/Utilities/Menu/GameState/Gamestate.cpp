@@ -37,7 +37,7 @@ void GameState::addPlayerToHighScores(Player P1, std::map<int, Player> mappedHig
 			if (i == 0) { if (vecsHighscores[i] < P1) { vecsHighscores.insert(vecsHighscores.begin(), P1); break; } }
 			else
 			{
-				if (P1 < vecsHighscores[i] && vecsHighscores[i - 1] < P1) { vecsHighscores.insert(vecsHighscores.begin() + i, P1); return; }
+				if (P1 < vecsHighscores[i - 1] && vecsHighscores[i] < P1) { vecsHighscores.insert(vecsHighscores.begin() + i, P1); break; }
 			}
 			if (i == vecsHighscores.size() - 1) { vecsHighscores.push_back(P1); break; } // Do the checking
 		}
@@ -220,7 +220,7 @@ void GameState::initializeGame()
 	GetDifficultyLevel();
 	GetGameAmmount();
 	system("cls");
-	int nGamePlayed = 1;
+	int nGamePlayed = 0;
 	for (int i = 1; i <= this->GameAmmount; i++, nGamePlayed++)
 	{
 		Problem* Prob = new Problem(this->GameDifficulty, i);
@@ -242,6 +242,7 @@ void GameState::initializeGame()
 		}
 		if (Prob->IsAnsGood()) { MathPlayer->AddPoint(Prob->GiveProblemPointWeight()); }
 		MathPlayer->AssignProblem(*Prob);
+		system("Pause");
 		delete Prob;
 	}
 	if (nGamePlayed == this->GameAmmount)
