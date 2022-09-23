@@ -25,55 +25,29 @@ bool GameState::addToHighScores(Player checkPlayer)
 // Adds Player to highscores
 void GameState::addPlayerToHighScores(Player P1, std::map<int, Player> mappedHighscores)
 {
-	// If the size of mappedHighscores is lower than 10
-	if (mappedHighscores.size() < 10)
-	{
-		std::vector<Player> vecsHighscores = populateVectorWithHighscores(mappedHighscores); // Save scores into a vector in the same order
+	std::vector<Player> vecsHighscores = populateVectorWithHighscores(mappedHighscores); // Save scores into a vector in the sameorder
 
-		mappedHighscores.clear(); // Remove values from mapped highscores
-		for (int i = 0; i < vecsHighscores.size(); i++)
-		{
-
-			if (i == 0) { if (vecsHighscores[i] < P1) { vecsHighscores.insert(vecsHighscores.begin(), P1); break; } }
-			else
-			{
-				if (P1 < vecsHighscores[i - 1] && vecsHighscores[i] < P1) { vecsHighscores.insert(vecsHighscores.begin() + i, P1); break; }
-			}
-			if (i == vecsHighscores.size() - 1) { vecsHighscores.push_back(P1); break; } // Do the checking
-		}
-		if (vecsHighscores.empty()) // If it's empty push_back player value
-			vecsHighscores.push_back(P1);
-		if (vecsHighscores.size() > 10) // If its bigger than 10 delete last element
-			vecsHighscores.pop_back();
-		for (int i = 0; i < vecsHighscores.size(); i++) // repopulate mappedHighscores
-		{
-			mappedHighscores.insert(std::make_pair(i + 1, vecsHighscores[i]));
-		}
-		vecsHighscores.clear(); // Remove the info from vector
-	}
-	// If the size of mappedHighscores is greater or equalt to 10
-	else
+	mappedHighscores.clear(); // Remove values from mapped highscores
+	if (vecsHighscores.empty()) // If it's empty push_back player value
+		vecsHighscores.push_back(P1);
+	for (int i = 0; i < vecsHighscores.size(); i++)
 	{
-		int nPosition = 1;
-		Player* PrevPosition = new Player;
-		for (auto i = mappedHighscores.begin(); i != mappedHighscores.end(); i++)
+
+		if (i == 0) { if (vecsHighscores[i] < P1) { vecsHighscores.insert(vecsHighscores.begin(), P1); break; } }
+		else
 		{
-			if (nPosition == 1) // If first position
-			{
-				if (i->second < P1){mappedHighscores[nPosition] = P1; break;} // If score of Player mapped on i-th position is less than current player's update first place
-			}
-			else
-			{
-				if (P1 < PrevPosition && i->second < P1) // If score of Player mapped on i-th positon is less than current player's and i-th - 1 position is higher than update the i-th position entry
-				{
-					if (i->second < P1) { mappedHighscores[nPosition] = P1; break; }
-				}
-			}
-			nPosition++;
-			PrevPosition = &i->second;
+			if (P1 <= vecsHighscores[i - 1] && vecsHighscores[i] < P1) { vecsHighscores.insert(vecsHighscores.begin() + i, P1);break; }
 		}
-		delete PrevPosition;
+		if (i == vecsHighscores.size() - 1) { vecsHighscores.push_back(P1); break; } // Do the checking
 	}
+	if (vecsHighscores.size() > 10) // If its bigger than 10 delete last element
+		vecsHighscores.pop_back();
+	for (int i = 0; i < vecsHighscores.size(); i++) // repopulate mappedHighscores
+	{
+		mappedHighscores.insert(std::make_pair(i + 1, vecsHighscores[i]));
+	}
+	vecsHighscores.clear(); // Remove the info from vector
+	
 	saveNewHighscores(mappedHighscores);
 }
 // Loads highscores into memory (via std::map)
