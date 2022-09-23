@@ -56,6 +56,10 @@ bool Problem::wasAnswerGood(char cActionDone)
 	switch (cActionDone)
 	{
 	default:
+		if (this->nDiff >= 4)
+		{
+			return tmpExpect.find(tmpActual) != std::string::npos;
+		}
 		return fabs(dbExpected - dbActual) < DBL_EPSILON;
 	case '/':
 		return tmpExpect.find(tmpActual) != std::string::npos;
