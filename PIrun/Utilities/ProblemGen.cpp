@@ -2,7 +2,7 @@
 // Generate a number depending on Difficulty
 double Problem::GenerateNum(int Dif)
 {
-	return rand() % static_cast<long>(pow(10, Dif)) + 1;
+	return rand() % static_cast<long>(pow(10, Dif)) + static_cast<long>(pow(10, Dif-1)) + 1;
 }
 // Generate only action char
 char Problem::GenerateAction()
