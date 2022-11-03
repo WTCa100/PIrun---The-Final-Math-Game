@@ -99,16 +99,14 @@ void Menu::getUserInput(int &actType)
 /*The following methods are uset do validate wether or not essential files exists*/
 void Menu::checkEssentialFiles()
 {
+	checkScores(PLAYERS_DATA_CSV);
 	checkScores(HIGHSCORES_CSV);
-	checkScores(SCOREBOARD_CSV);
-	checkScores(DETAILS_CSV, DETAILED_RECORDS);
 }
 
 void Menu::makeInitialFiles()
 {
+	makeFile(SCORES, PLAYERS_DATA_CSV);
 	makeFile(SCORES, HIGHSCORES_CSV);
-	makeFile(SCORES, SCOREBOARD_CSV);
-	makeFile(DETAILED_RECORDS, DETAILS_CSV);
 }
 
 void Menu::checkScores(std::string strFileName, std::string _DIRpath)
@@ -133,21 +131,15 @@ void Menu::makeFile(std::string _DIRpath, std::string strFileName)
 	std::ofstream filePlace;
 	std::cout << "Creating " << strFileName << " at " << _DIRpath << std::endl;
 	filePlace.open(_path);
-	if (strFileName == SCOREBOARD_CSV)
-	{
-		filePlace << "ID,Name,Points\n";
-		filePlace.close();
-		return;
-	}
-	if (strFileName == DETAILS_CSV)
-	{
-		filePlace << "ID,Name,Number_of_Problems,Problems_Solved_Good,Points" << std::endl;
-		filePlace.close();
-		return;
-	}
 	if (strFileName == HIGHSCORES_CSV)
 	{
 		filePlace << "Place,Name,ID,Points" << std::endl;
+		filePlace.close();
+		return;
+	}
+	if (strFileName == PLAYERS_DATA_CSV) // It is the same as original DETAILS_CSV schema
+	{
+		filePlace << "ID,Name,Number_of_Problems,Problems_Solved_Good,Points" << std::endl;
 		filePlace.close();
 		return;
 	}
@@ -191,7 +183,7 @@ void Menu::showProblemList(int checkID)
 
 void Menu::showPlayerDetail(int checkID)
 {
-	bool bWasPlayerFound = GameState::LookAndDisplayPlayerDetails(GameState::LoadDetails(), checkID);
+	bool bWasPlayerFound = GameState::LookAndDisplayPlayerDetails(GameState::LoadPlayersData(), checkID);
 	char nextAction;
 	std::string tmpValHolder;
 	if (bWasPlayerFound)
