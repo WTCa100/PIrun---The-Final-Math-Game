@@ -36,8 +36,6 @@ protected:
 	bool InitialBootUp;
 	int nGameDiff;
 public:
-	// Value obtaining
-	int GetGameDiff();
 	// Display functions
 	void mainDisplay();
 	Menu();
