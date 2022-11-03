@@ -16,7 +16,7 @@ int Player::getHighestId()
 {
 	std::vector<int> vecsIdList;
 	std::string _DIR = SCORES;
-`	std::string _fileName = PLAYERS_DATA_CSV;
+	std::string _fileName = PLAYERS_DATA_CSV;
 	std::ifstream loadIDs;
 	std::string strLine;
 	char cDelimeter = ',';
