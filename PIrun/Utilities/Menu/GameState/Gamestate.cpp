@@ -30,15 +30,18 @@ void GameState::addPlayerToHighScores(Player P1, std::map<int, Player> mappedHig
 	mappedHighscores.clear(); // Remove values from mapped highscores
 	if (vecsHighscores.empty()) // If it's empty push_back player value
 		vecsHighscores.push_back(P1);
-	for (int i = 0; i < vecsHighscores.size(); i++)
+	else
 	{
-
-		if (i == 0) { if (vecsHighscores[i] < P1) { vecsHighscores.insert(vecsHighscores.begin(), P1); break; } }
-		else
+		for (int i = 0; i < vecsHighscores.size(); i++)
 		{
-			if (P1 <= vecsHighscores[i - 1] && vecsHighscores[i] < P1) { vecsHighscores.insert(vecsHighscores.begin() + i, P1);break; }
+
+			if (i == 0) { if (vecsHighscores[i] < P1) { vecsHighscores.insert(vecsHighscores.begin(), P1); break; } }
+			else
+			{
+				if (P1 <= vecsHighscores[i - 1] && vecsHighscores[i] < P1) { vecsHighscores.insert(vecsHighscores.begin() + i, P1);break; }
+			}
+			if (i == vecsHighscores.size() - 1) { vecsHighscores.push_back(P1); break; } // Do the checking
 		}
-		if (i == vecsHighscores.size() - 1) { vecsHighscores.push_back(P1); break; } // Do the checking
 	}
 	if (vecsHighscores.size() > 10) // If its bigger than 10 delete last element
 		vecsHighscores.pop_back();
@@ -183,7 +186,7 @@ bool GameState::askToSaveGame()
 			std::cout << "Enter a valid option!\n";
 
 	} while (!Validate::isYesNoValid(strTmpValHolder));
-	if (strTmpValHolder[0] == 'N') { return false; }
+	if (toupper(strTmpValHolder[0]) == 'N') { return false; }
 	return true;
 }
 
@@ -196,6 +199,7 @@ void GameState::initializeGame()
 	system("cls");
 	int nGamePlayed = 0;
 	bool bIsEarlyClose = false;
+
 	for (int i = 1; i <= this->GameAmmount; i++, nGamePlayed++)
 	{
 		Problem* Prob = new Problem(this->GameDifficulty, i);
@@ -206,8 +210,7 @@ void GameState::initializeGame()
 			{
 				bIsEarlyClose = true;
 				saveProblem(*MathPlayer);
-				savePlayerStats(*MathPlayer, 1);
-				savePlayerStats(*MathPlayer, 2);
+				savePlayerStats(*MathPlayer);
 				if (GameState::addToHighScores(*MathPlayer))
 					GameState::addPlayerToHighScores(*MathPlayer, GameState::loadPlayersHighscores());
 				delete Prob;
@@ -226,8 +229,7 @@ void GameState::initializeGame()
 	if (nGamePlayed == this->GameAmmount && !bIsEarlyClose)
 	{
 		saveProblem(*MathPlayer);
-		savePlayerStats(*MathPlayer, 1);
-		savePlayerStats(*MathPlayer, 2);
+		savePlayerStats(*MathPlayer);
 		if (GameState::addToHighScores(*MathPlayer))
 			GameState::addPlayerToHighScores(*MathPlayer, GameState::loadPlayersHighscores());
 	}
@@ -275,80 +277,20 @@ void GameState::saveProblem(Player whoPlayed)
 	SaveTxt.close();
 }
 
-void GameState::savePlayerStats(Player whoToSign, int _Type)
+void GameState::savePlayerStats(Player whoToSign)
 {
 	std::string _saveDIR;
 	std::string _saveFile;
-	switch (_Type)
-	{
-	case 1:
-		_saveDIR = SCORES;
-		_saveFile = SCOREBOARD_CSV;
-		break;
-	case 2:
-		_saveDIR = DETAILED_RECORDS;
-		_saveFile = DETAILS_CSV;
-	}
+	_saveDIR = SCORES;
+	_saveFile = PLAYERS_DATA_CSV;
 	std::fstream savePlayerInfo;
 	savePlayerInfo.open(_saveDIR + '/' + _saveFile, std::ios::app);
-	switch (_Type)
-	{
-	case 1:
-		whoToSign.SavePlayerToScoreboard(savePlayerInfo);
-		break;
-	case 2:
-		whoToSign.SavePlayerDetails(savePlayerInfo);
-		break;
-	}
+	whoToSign.SavePlayerDetails(savePlayerInfo);
 	savePlayerInfo.close();
-
 }
 
 // Loading scores, details and Psets (Public)
 
-std::map<int, Player> GameState::LoadScoreboards()
-{
-	std::map<int, Player> mapOut;
-	mapOut.clear();
-	std::string _DIR = SCORES;
-	std::string _fileName = SCOREBOARD_CSV;
-	std::ifstream ScoreboardFile;
-	std::string strLine;
-	char cDelimeter = ',';
-	ScoreboardFile.open(_DIR + '/' + _fileName);
-	if (!ScoreboardFile.is_open()) { std::cout << "No such file!\n"; return mapOut; }
-	while (std::getline(ScoreboardFile, strLine))
-	{
-		if (strLine == "ID,Name,Points") continue;
-		int nCell = 1;
-		std::stringstream ssRow(strLine);
-		std::string rawData;
-		// Constructor tmp value collectors
-		int* tmpId = new int;
-		std::string* tmpUserName = new std::string;
-		double* tmpPoints = new double;
-		while (std::getline(ssRow, rawData, cDelimeter))
-		{
-			switch (nCell)
-			{
-			case 1: *tmpId = std::stoi(rawData); break;
-			case 2: *tmpUserName = rawData; break;
-			case 3: *tmpPoints = std::stod(rawData); break;
-			}
-			if (nCell == 3)
-			{
-				Player* tmpP = new Player(*tmpId, *tmpUserName, *tmpPoints);
-				mapOut.insert(std::make_pair(tmpP->givePlayerId(), *tmpP));
-				delete tmpP;
-				delete tmpId; delete tmpUserName; delete tmpPoints;
-				nCell = 1;
-			}
-			else nCell++;
-		}
-	}
-	ScoreboardFile.close();
-	return mapOut;
-}
 
 void GameState::SearchForPlayerPset(Player& PSearchFor)
 {
@@ -408,7 +350,7 @@ void GameState::SearchForPlayerPset(Player& PSearchFor)
 
 Player GameState::returnPlayer(int id)
 {
-	std::map<int, Player> tmpMap = LoadDetails();
+	std::map<int, Player> tmpMap = LoadPlayersData();
 	return tmpMap[id];
 }
 
@@ -420,11 +362,11 @@ bool GameState::LookAndDisplayPlayerDetails(std::map<int, Player> mappedPlayers,
 	return true;
 }
 
-std::map<int,Player> GameState::LoadDetails()
+std::map<int,Player> GameState::LoadPlayersData()
 {
 	std::map<int, Player> mapOut;
-	std::string _DIR = DETAILED_RECORDS;
-	std::string _fileName = DETAILS_CSV;
+	std::string _DIR = SCORES;
+	std::string _fileName = PLAYERS_DATA_CSV;
 	std::ifstream detailFile;
 	std::string strLine;
 	char cDelimeter = ',';
@@ -470,7 +412,7 @@ std::map<int,Player> GameState::LoadDetails()
 
 void GameState::displayScoreboard()
 {
-	std::map<int, Player> mappedScoreboard = GameState::LoadScoreboards();
+	std::map<int, Player> mappedScoreboard = GameState::LoadPlayersData();
 	if (mappedScoreboard.empty()) { std::cout << "Scoreboards are empty!\n"; return; }
 	int nEntry = 1;
 	int nPage = 1;

@@ -14,7 +14,6 @@ class GameState
 {
 private:
 	// Loading scores
-	static std::map<int,Player> LoadScoreboards();
 	static std::vector<Player> populateVectorWithHighscores(std::map<int, Player> getFrom);
 	static bool addToHighScores(Player checkPlayer);
 	static void addPlayerToHighScores(Player P1, std::map<int, Player> mappedHighscores);
@@ -32,13 +31,13 @@ private:
 	// Saving scores
 	void saveProblem(Player whoPlayed);
 	static void saveNewHighscores(std::map<int, Player> newMappedHighscores);
-	static void savePlayerStats(Player whoToSign, int _Type);
+	static void savePlayerStats(Player whoToSign);
 public:
 	// Loading scores, details and Psets
 	static void SearchForPlayerPset(Player& PSearchFor);
 	static Player returnPlayer(int id);
 	static bool LookAndDisplayPlayerDetails(std::map<int, Player> mappedPlayers, int Id);
-	static std::map<int,Player> LoadDetails();
+	static std::map<int,Player> LoadPlayersData();
 	// Display functions
 	static void displayScoreboard();
 	static void displayPset(Player PDisp);
