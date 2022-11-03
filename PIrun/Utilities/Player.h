@@ -29,9 +29,8 @@ public:
 	void ShowPlayerScoreboard();
 	void ShowPlayerHighscores();
 	double GiveFinalScores(); // Only use this method at the end of gameplay
-	void SavePlayerDetails(std::fstream& filePtr);
+	void SavePlayerDetails(std::fstream& filePtr); // Used to store data only in one PLAYERS_DETAILED_RECORDS
 	void SavePlayerProgress(std::ofstream &filePtr);
-	void SavePlayerToScoreboard(std::fstream& filePtr); // Todo save player to scoreboard.csv
 	void SavePlayerToHighscores(std::ofstream& filePtr);
 	int givePlayerId();
 	void DisplayProblems(); // Debug

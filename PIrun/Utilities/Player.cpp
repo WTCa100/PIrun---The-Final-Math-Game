@@ -16,14 +16,14 @@ int Player::getHighestId()
 {
 	std::vector<int> vecsIdList;
 	std::string _DIR = SCORES;
-	std::string _fileName = SCOREBOARD_CSV;
+`	std::string _fileName = PLAYERS_DATA_CSV;
 	std::ifstream loadIDs;
 	std::string strLine;
 	char cDelimeter = ',';
 	loadIDs.open(_DIR + '/' + _fileName);
 	while (std::getline(loadIDs, strLine))
 	{
-		if (strLine == "ID,Name,Points") continue;
+		if (strLine == "ID,Name,Number_of_Problems,Problems_Solved_Good,Points") continue;
 		std::stringstream RawLine(strLine);
 		std::string RawData;
 		bool isFirstCell = true;
@@ -96,11 +96,6 @@ void Player::SavePlayerProgress(std::ofstream &filePtr)
 	{
 		i->second.SaveProblem(filePtr);
 	}
-}
-
-void Player::SavePlayerToScoreboard(std::fstream& filePtr)
-{
-	filePtr << this->nID << "," << this->strUsername << "," << this->dbPointsEarned << std::endl;
 }
 
 int Player::givePlayerId()
