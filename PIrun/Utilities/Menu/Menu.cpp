@@ -12,22 +12,6 @@
 // Value obtaining (public)
 
 // Dispay functions (public)
-int Menu::GetGameDiff()
-{
-	std::string strTmpHolder;
-	std::cout << "Choose your difficulty: \n";
-	std::cout << "Option 1\n";
-	std::cout << "Option 2\n";
-	std::cout << "Option 3\n";
-	std::cout << "Option 4\n";
-	std::cout << "Option 5\n";
-	std::cout << "Option 6\n";
-	do
-	{
-		std::getline(std::cin, strTmpHolder);
-	} while (true);
-	return 0;
-}
 
 void Menu::mainDisplay()
 {
